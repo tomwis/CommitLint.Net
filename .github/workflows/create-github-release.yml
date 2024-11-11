@@ -1,0 +1,41 @@
+# name: Create GitHub Release
+#
+# on:
+#     push:
+#         tags:
+#           # Trigger on version tags (e.g., v1.0.0)
+#           - 'v[0-9]+.[0-9]+.[0-9]+**'
+#           # Trigger on pre-release version tags (e.g., v1.0.0-alpha.1)
+#           - 'v[0-9]+.[0-9]+.[0-9]+-**.[0-9]+'
+#
+#     workflow_dispatch:
+#
+# permissions:
+#     contents: write
+#
+# jobs:
+#     create_release:
+#         runs-on: ubuntu-latest
+#
+#         steps:
+#             - uses: actions/checkout@v4
+#
+#             - name: Extract version from tag
+#               run: echo "version=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV  # Get version number without 'v' prefix
+#
+#             - name: Get release notes from CHANGELOG.md
+#               run: |
+#                   set -e
+#                   version="${{ env.version }}"
+#                   changelog_file="src/CommitLint.Net/CHANGELOG.md"
+#                   release_notes=$(./build/parse-changelog.sh "$version" "$changelog_file")
+#
+#                   echo "release_notes<<EOF" >> $GITHUB_ENV
+#                   echo "$release_notes" >> $GITHUB_ENV
+#                   echo "EOF" >> $GITHUB_ENV
+#
+#             - name: Create GitHub Release
+#               env:
+#                 GH_TOKEN: ${{ github.token }}
+#               run: |
+#                   gh release create "v${{ env.version }}" --title "Release v${{ env.version }}" --notes "${{ env.release_notes }}"

@@ -1,0 +1,49 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommitLint.Net", "src\CommitLint.Net\CommitLint.Net.csproj", "{597EBF0E-408B-437D-BF0B-99D0D6489BF5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{79EF03E7-0DE9-4436-A979-4E31AD63F2BC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommitLint.Net.Tests", "tests\CommitLint.Net.Tests\CommitLint.Net.Tests.csproj", "{289742BC-FC27-4864-9594-57C0F71725AE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommitLint.Net.ConventionTests", "tests\CommitLint.Net.ConventionTests\CommitLint.Net.ConventionTests.csproj", "{C26BA2F6-4CB6-45F8-A732-6E5183B95837}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{597EBF0E-408B-437D-BF0B-99D0D6489BF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{597EBF0E-408B-437D-BF0B-99D0D6489BF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{597EBF0E-408B-437D-BF0B-99D0D6489BF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{597EBF0E-408B-437D-BF0B-99D0D6489BF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{289742BC-FC27-4864-9594-57C0F71725AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{289742BC-FC27-4864-9594-57C0F71725AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{289742BC-FC27-4864-9594-57C0F71725AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{289742BC-FC27-4864-9594-57C0F71725AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C26BA2F6-4CB6-45F8-A732-6E5183B95837}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C26BA2F6-4CB6-45F8-A732-6E5183B95837}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C26BA2F6-4CB6-45F8-A732-6E5183B95837}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C26BA2F6-4CB6-45F8-A732-6E5183B95837}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{289742BC-FC27-4864-9594-57C0F71725AE} = {79EF03E7-0DE9-4436-A979-4E31AD63F2BC}
+		{C26BA2F6-4CB6-45F8-A732-6E5183B95837} = {79EF03E7-0DE9-4436-A979-4E31AD63F2BC}
+	EndGlobalSection
+EndGlobal
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionSettings", "SolutionSettings", "692A1240-50CF-4CC3-B7A8-310A97DF4F6C"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitignore = .gitignore
+		Directory.Build.targets = Directory.Build.targets
+		Directory.Packages.props = Directory.Packages.props
+		task-runner.json = .husky/task-runner.json
+	EndProjectSection
+EndProject

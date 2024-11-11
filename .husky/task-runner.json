@@ -1,0 +1,46 @@
+{
+  "$schema": "https://alirezanet.github.io/Husky.Net/schema.json",
+  "tasks": [
+    {
+      "name": "format-staged-files-with-csharpier",
+      "group": "pre-commit",
+      "command": "dotnet",
+      "args": [
+        "csharpier",
+        "${staged}"
+      ],
+      "include": [
+        "**/*.cs"
+      ]
+    },
+    {
+      "name": "build",
+      "group": "pre-commit",
+      "command": "dotnet",
+      "args": [
+        "build"
+      ]
+    },
+    {
+      "name": "run-unit-tests",
+      "group": "pre-commit",
+      "command": "dotnet",
+      "args": [
+        "test",
+        "--filter",
+        "FullyQualifiedName~.Tests.UnitTests",
+        "--no-build"
+      ]
+    },
+    {
+      "name": "run-convention-tests",
+      "group": "pre-commit",
+      "command": "dotnet",
+      "args": [
+        "test",
+        "tests/CommitLint.Net.ConventionTests",
+        "--no-build"
+      ]
+    }
+  ]
+}

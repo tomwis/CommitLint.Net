@@ -1,0 +1,25 @@
+<Project>
+  <PropertyGroup>
+    <DirectoryBuildTargetsDir>$(MSBuildThisFileDirectory)</DirectoryBuildTargetsDir>
+    <ToolListFile>$(DirectoryBuildTargetsDir)config/dotnet_tools_installed.txt</ToolListFile>
+    <MessageTag>[Directory.Build.targets][$(MSBuildProjectName)]</MessageTag>
+  </PropertyGroup>
+  <Target Name="DotnetToolsRestoreAndInstall" BeforeTargets="Restore;CollectPackageReferences">
+    <Message Text="$(MessageTag) DirectoryBuildTargetsDir: $(DirectoryBuildTargetsDir)" Importance="High" />
+    <Message Text="$(MessageTag) ToolListFile: $(ToolListFile)" Importance="High" />
+    <ReadLinesFromFile File="$(ToolListFile)">
+      <Output TaskParameter="Lines" ItemName="ToolLines" />
+    </ReadLinesFromFile>
+    <Message Text="$(MessageTag) Tool: %(ToolLines.Identity)" Importance="High" />
+    <PropertyGroup>
+      <HuskyInstalled Condition="'%(ToolLines.Identity)' == 'Husky'">true</HuskyInstalled>
+    </PropertyGroup>
+    <Message Text="$(MessageTag) HuskyInstalled: $(HuskyInstalled)" Importance="High" />
+    <CallTarget Targets="HuskyRestoreAndInstall" Condition="'$(HUSKY)' != '0' AND '$(HuskyInstalled)' != 'true'" />
+  </Target>
+  <Target Name="HuskyRestoreAndInstall">
+    <Exec Command="dotnet tool restore" StandardOutputImportance="Low" StandardErrorImportance="High" />
+    <Exec Command="dotnet husky install" StandardOutputImportance="Low" StandardErrorImportance="High" WorkingDirectory="$(DirectoryBuildTargetsDir)" />
+    <WriteLinesToFile File="$(ToolListFile)" Lines="Husky" />
+  </Target>
+</Project>
