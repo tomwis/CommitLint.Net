@@ -1,5 +1,3 @@
-using NUnit.Framework;
-
 namespace CommitLint.Net.Tests.IntegrationTests;
 
 [SetUpFixture]
