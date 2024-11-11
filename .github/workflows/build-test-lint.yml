@@ -1,81 +1,72 @@
-# Uncomment this file to use this action
-# name: Build, Test, Lint
-#
-# on:
-#     push:
-#
-# permissions:
-#     actions: read
-#     checks: write
-#     contents: write
-#     pull-requests: write
-#
-# jobs:
-#     build-and-test:
-#         name: Build and Test
-#         runs-on: ubuntu-latest
-#         steps:
-#             - uses: actions/checkout@v4
-#             - name: Setup .NET
-#               uses: actions/setup-dotnet@v4
-#               with:
-#                   dotnet-version: 8.0.x
-#             
-#             - name: Restore dependencies
-#               run: dotnet restore
-#             - name: Build
-#               run: dotnet build --no-restore
-#             - name: Test
-#               run: dotnet test --no-build --verbosity normal --logger "trx;LogFileName=TestResults.trx"
-#             - name: Test Reporter
-#               uses: dorny/test-reporter@v1
-#               with:
-#                   name: Test Results
-#                   path: '**/TestResults/*.trx'
-#                   reporter: dotnet-trx
-#
-#     format:
-#         name: Format Code
-#         runs-on: ubuntu-latest
-#         steps:
-#             - uses: actions/checkout@v4
-#             - name: Setup .NET
-#               uses: actions/setup-dotnet@v4
-#               with:
-#                   dotnet-version: 8.0.x
-#             - name: Install CSharpier
-#               run: dotnet tool install csharpier
-#             - name: Format with CSharpier
-#               run: dotnet csharpier .
-#             - name: Format with dotnet format
-#               run: |
-#                   dotnet format style
-#                   dotnet format analyzers
-#             - name: Build
-#               run: dotnet build
-#             - name: Push changes
-#               run: |
-#                   git add .
-#                   git diff --cached --quiet && echo "No formatting changes found. Exiting." && exit 0
-#
-#                   git config --global user.name "github-actions[bot]"
-#                   git config --global user.email "github-actions[bot]@users.noreply.github.com"
-#
-#                   CURRENT_DATETIME=$(date +'%Y-%m-%d-%H-%M-%S')
-#                   BRANCH_NAME="auto/reformat-$CURRENT_DATETIME"
-#                   echo "SOURCE_BRANCH=$BRANCH_NAME" >> $GITHUB_ENV
-#
-#                   git commit --no-verify -m "style: automatic code formatting by GitHub workflow"
-#                   echo "Pushing changes to branch $BRANCH_NAME"
-#                   git push origin HEAD:$BRANCH_NAME
-#             - name: Create Pull Request
-#               if: env.SOURCE_BRANCH != ''
-#               env:
-#                   Target_Branch: ${{ github.ref_name }}
-#                   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#               run: >
-#                   gh pr create
-#                   --title "Auto code formatting"
-#                   --body "This PR applies automated code formatting done in GitHub workflow."
-#                   --base $Target_Branch
-#                   --head $SOURCE_BRANCH
+name: Build, Test, Lint
+on:
+    push:
+permissions:
+    actions: read
+    checks: write
+    contents: write
+    pull-requests: write
+jobs:
+    build-and-test:
+        name: Build and Test
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - name: Setup .NET
+              uses: actions/setup-dotnet@v4
+              with:
+                  dotnet-version: 8.0.x
+            - name: Restore dependencies
+              run: dotnet restore
+            - name: Build
+              run: dotnet build --no-restore
+            - name: Test
+              run: dotnet test --no-build --verbosity normal --logger "trx;LogFileName=TestResults.trx"
+            - name: Test Reporter
+              uses: dorny/test-reporter@v1
+              with:
+                  name: Test Results
+                  path: '**/TestResults/*.trx'
+                  reporter: dotnet-trx
+    format:
+        name: Format Code
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - name: Setup .NET
+              uses: actions/setup-dotnet@v4
+              with:
+                  dotnet-version: 8.0.x
+            - name: Install CSharpier
+              run: dotnet tool install csharpier
+            - name: Format with CSharpier
+              run: dotnet csharpier .
+            - name: Format with dotnet format
+              run: |
+                  dotnet format style
+                  dotnet format analyzers
+            - name: Build
+              run: dotnet build
+            - name: Push changes
+              run: |
+                  git add .
+                  git diff --cached --quiet && echo "No formatting changes found. Exiting." && exit 0
+                  git config --global user.name "github-actions[bot]"
+                  git config --global user.email "github-actions[bot]@users.noreply.github.com"
+                  CURRENT_DATETIME=$(date +'%Y-%m-%d-%H-%M-%S')
+                  BRANCH_NAME="auto/reformat-$CURRENT_DATETIME"
+                  echo "SOURCE_BRANCH=$BRANCH_NAME" >> $GITHUB_ENV
+                  git commit --no-verify -m "style: automatic code formatting by GitHub workflow"
+                  echo "Pushing changes to branch $BRANCH_NAME"
+                  git push origin HEAD:$BRANCH_NAME
+            - name: Create Pull Request
+              if: env.SOURCE_BRANCH != ''
+              env:
+                  Target_Branch: ${{ github.ref_name }}
+                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              run: >
+                  gh pr create
+                  --title "Auto code formatting"
+                  --body "This PR applies automated code formatting done in GitHub workflow."
+                  --base $Target_Branch
+                  --head $SOURCE_BRANCH
