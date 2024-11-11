@@ -4,7 +4,7 @@
     <ToolListFile>$(DirectoryBuildTargetsDir)config/dotnet_tools_installed.txt</ToolListFile>
     <MessageTag>[Directory.Build.targets][$(MSBuildProjectName)]</MessageTag>
   </PropertyGroup>
-  <Target Name="DotnetToolsRestoreAndInstall" BeforeTargets="Restore;CollectPackageReferences">
+  <Target Name="DotnetToolsRestoreAndInstall" BeforeTargets="Restore;CollectPackageReferences" Condition="'$(MSBuildProjectName)' == 'CommitLint.Net'">
     <Message Text="$(MessageTag) DirectoryBuildTargetsDir: $(DirectoryBuildTargetsDir)" Importance="High" />
     <Message Text="$(MessageTag) ToolListFile: $(ToolListFile)" Importance="High" />
     <ReadLinesFromFile File="$(ToolListFile)">
