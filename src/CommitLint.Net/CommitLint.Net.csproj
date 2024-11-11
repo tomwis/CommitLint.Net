@@ -10,4 +10,8 @@
     <Version>0.1.0</Version>
     <PackageId>CommitLint.Net</PackageId>
   </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="CommandLineParser" />
+    <PackageReference Include="TestableIO.System.IO.Abstractions.Wrappers" />
+  </ItemGroup>
 </Project>
