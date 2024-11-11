@@ -6,14 +6,63 @@ It doesn't have a full set of rules yet.
 
 ## How to use
 
-Install globally:
-```
-dotnet tool install -g CommitLint.Net
-```
-
-or locally for the project only:
+### Install
 ```
 dotnet new tool-manifest # if this is your first local dotnet tool in this project
 dotnet tool install CommitLint.Net
 ```
 
+### Create config
+
+Create file `commit-message-config.json` with following content:
+```
+{
+    "config": {
+        "max-subject-length": {
+            "enabled": true,
+            "value": 90
+        },
+        "conventional-commit": {
+            "enabled": true,
+            "types": [ "feat", "fix", "refactor", "build", "chore", "style", "test", "docs", "perf", "revert" ]
+        }
+    }
+}
+```
+These are currently supported options.
+
+### Configure Husky.NET
+
+Install & configure Husky.NET:
+```
+dotnet tool install Husky.Net
+dotnet husky install
+dotnet husky run --group commit-msg
+```
+Then in `.husky/task-runner.json` add task to run linter:
+```
+{
+  "$schema": "https://alirezanet.github.io/Husky.Net/schema.json",
+  "tasks": [
+    {
+      "name": "commit-message-linter",
+      "group": "commit-msg",
+      "command": "dotnet",
+      "args": [
+        "commit-lint",
+        "--commit-file",
+        "${args}",
+        "--commit-message-config-file",
+        "path/to/commit-message-config.json"
+      ]
+    }
+  ]
+}
+```
+
+### Direct usage
+
+If you'd like to use it directly, without husky:
+```
+dotnet commit-lint --commit-file "path/to/commit-message.txt" --commit-message-config-file "path/to/commit-message-config.json"
+```
