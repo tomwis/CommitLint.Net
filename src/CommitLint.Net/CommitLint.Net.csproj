@@ -6,6 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <PropertyGroup>
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>commit-lint</ToolCommandName>
     <PackageOutputPath>./nupkg</PackageOutputPath>
     <Version>0.1.0</Version>
     <PackageId>CommitLint.Net</PackageId>
