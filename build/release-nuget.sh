@@ -61,7 +61,7 @@ Version tag will be added to the last commit. [y/$(underline "n")] "
     fi
 
     echo "Tagging commit with version 'v$VERSION'..."
-    if git tag -l "v$VERSION" > /dev/null; then
+    if [ "$(git tag --list "v$VERSION")" ]; then
         print_error "Tag already exists. Exiting."
         exit 1
     else
@@ -74,6 +74,14 @@ Version tag will be added to the last commit. [y/$(underline "n")] "
     echo "Publishing to NuGet..."
     if [ -z "$NUGET_API_KEY" ]; then
         print_error "NUGET_API_KEY is empty. Set it in config/.env file."
+        exit 1
+    fi
+
+    echo -n "All ready. Publish? [$(underline "y")/n] "
+
+    read -r response
+    if [[ "${response:l}" =~ ^(no|n)$ ]]; then
+        echo "Exiting without publishing."
         exit 1
     fi
     dotnet nuget push "$WORKING_DIR"/nupkg/*.nupkg --api-key "$NUGET_API_KEY" --source "$NUGET_SOURCE"
