@@ -42,7 +42,7 @@ prepare() {
 publish() {
     VERSION=$(get_version)
 
-    if [ -z "$(git ls-files --others --exclude-standard)" ] && git diff --exit-code && git diff --cached --exit-code; then
+    if [ -z "$(git ls-files --others --exclude-standard)" ] && git diff --quiet --exit-code && git diff --quiet --cached --exit-code; then
         echo -n "
 There are no changes to commit.
 Usually you should run prepare command before publish to increment version number and generate changelog.
