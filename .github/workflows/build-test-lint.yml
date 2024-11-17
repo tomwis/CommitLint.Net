@@ -37,8 +37,8 @@ jobs:
               uses: actions/setup-dotnet@v4
               with:
                   dotnet-version: 8.0.x
-            - name: Install CSharpier
-              run: dotnet tool install csharpier
+            - name: Dotnet tool restore
+              run: dotnet tool restore
             - name: Format with CSharpier
               run: dotnet csharpier .
             - name: Format with dotnet format
