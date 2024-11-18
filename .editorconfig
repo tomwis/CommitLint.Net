@@ -13,5 +13,6 @@ indent_size = 4
 # using directive preferences
 dotnet_diagnostic.IDE0005.severity = warning # Remove unnecessary using directives
 
-[*.csproj]
+
+[*.{csproj,props,targets}]
 indent_size = 2
