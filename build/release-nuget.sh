@@ -77,6 +77,9 @@ Version tag will be added to the last commit. [y/$(underline "n")] "
         exit 1
     fi
 
+    PACKAGE_NAME=$(get_package_name)
+    NUGET_TO_PUBLISH="$WORKING_DIR"/nupkg/"$PACKAGE_NAME"."$VERSION".nupkg
+    echo "Nuget path: $NUGET_TO_PUBLISH"
     echo -n "All ready. Publish? [$(underline "y")/n] "
 
     read -r response
@@ -84,8 +87,7 @@ Version tag will be added to the last commit. [y/$(underline "n")] "
         echo "Exiting without publishing."
         exit 1
     fi
-    PACKAGE_NAME=$(get_package_name)
-    dotnet nuget push "$WORKING_DIR"/nupkg/"$PACKAGE_NAME"."$VERSION".nupkg --api-key "$NUGET_API_KEY" --source "$NUGET_SOURCE"
+    dotnet nuget push "$NUGET_TO_PUBLISH" --api-key "$NUGET_API_KEY" --source "$NUGET_SOURCE"
 
     echo "Published NuGet package: https://www.nuget.org/packages/$PACKAGE_NAME/$VERSION"
 }
