@@ -12,3 +12,6 @@ indent_size = 4
 # Language and unnecessary code rules
 # using directive preferences
 dotnet_diagnostic.IDE0005.severity = warning # Remove unnecessary using directives
+
+[*.csproj]
+indent_size = 2
