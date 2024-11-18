@@ -14,7 +14,10 @@ public sealed class Linter
         PrintCommit(config.CommitMessageLines);
         SubjectLengthValidation(commitSubject, config.CommitMessageConfig?.MaxSubjectLength);
         TypeValidation(commitSubject, config.CommitMessageConfig?.ConventionalCommit);
-        DescriptionNotEmptyValidation(commitSubject);
+        DescriptionNotEmptyValidation(
+            commitSubject,
+            config.CommitMessageConfig?.ConventionalCommit
+        );
 
         var lines = config.CommitMessageLines.Length;
         if (lines == 1)
@@ -23,8 +26,16 @@ public sealed class Linter
             return;
         }
 
-        BlankLineBetweenSubjectAndBodyValidation(config.CommitMessageLines);
-        BodyNotEmptyValidation(lines, config.CommitMessageLines);
+        BlankLineBetweenSubjectAndBodyValidation(
+            config.CommitMessageLines,
+            config.CommitMessageConfig?.ConventionalCommit
+        );
+
+        BodyNotEmptyValidation(
+            lines,
+            config.CommitMessageLines,
+            config.CommitMessageConfig?.ConventionalCommit
+        );
     }
 
     private static void PrintCommit(string[] commitMessage)
@@ -87,8 +98,17 @@ public sealed class Linter
         Console.WriteLine($"Type ({commitType}) check passed {Checkmark}");
     }
 
-    private static void DescriptionNotEmptyValidation(string commitSubject)
+    private static void DescriptionNotEmptyValidation(
+        string commitSubject,
+        ConventionalCommitConfig? conventionalCommitConfig
+    )
     {
+        if (conventionalCommitConfig is null || conventionalCommitConfig.Enabled == false)
+        {
+            Console.WriteLine("Conventional commit check disabled.");
+            return;
+        }
+
         var commitDescription = commitSubject.Split(SubjectSeparator)[1];
         if (string.IsNullOrWhiteSpace(commitDescription))
         {
@@ -99,8 +119,17 @@ public sealed class Linter
     }
 
     [SuppressMessage("ReSharper", "ParameterOnlyUsedForPreconditionCheck.Local")]
-    private static void BlankLineBetweenSubjectAndBodyValidation(string[] commitMessage)
+    private static void BlankLineBetweenSubjectAndBodyValidation(
+        string[] commitMessage,
+        ConventionalCommitConfig? conventionalCommitConfig
+    )
     {
+        if (conventionalCommitConfig is null || conventionalCommitConfig.Enabled == false)
+        {
+            Console.WriteLine("Conventional commit check disabled.");
+            return;
+        }
+
         if (!string.IsNullOrWhiteSpace(commitMessage[1]))
         {
             throw new CommitFormatException("There must be blank line between header and body.");
@@ -110,8 +139,18 @@ public sealed class Linter
     }
 
     [SuppressMessage("ReSharper", "ParameterOnlyUsedForPreconditionCheck.Local")]
-    private static void BodyNotEmptyValidation(int lines, string[] commitMessage)
+    private static void BodyNotEmptyValidation(
+        int lines,
+        string[] commitMessage,
+        ConventionalCommitConfig? conventionalCommitConfig
+    )
     {
+        if (conventionalCommitConfig is null || conventionalCommitConfig.Enabled == false)
+        {
+            Console.WriteLine("Conventional commit check disabled.");
+            return;
+        }
+
         if (lines >= 3 && string.IsNullOrWhiteSpace(commitMessage[2]))
         {
             throw new CommitFormatException("Body cannot be empty.");

@@ -7,13 +7,22 @@ namespace CommitLint.Net;
 public sealed class LinterConfig
 {
     public LinterConfig(string commitMessageFileName, string commitMessageConfigFileName)
+        : this(commitMessageFileName, commitMessageConfigFileName, new FileSystem()) { }
+
+    public LinterConfig(
+        string commitMessageFileName,
+        string commitMessageConfigFileName,
+        IFileSystem fileSystem
+    )
     {
-        var fileSystem = new FileSystem();
+        fileSystem ??= new FileSystem();
         var commitMessageFile = fileSystem.FileInfo.New(commitMessageFileName);
         var commitMessageConfigFile = fileSystem.FileInfo.New(commitMessageConfigFileName);
 
-        CommitMessageLines = File.ReadAllLines(commitMessageFile.FullName);
-        var commitMessageConfigContent = File.ReadAllText(commitMessageConfigFile.FullName);
+        CommitMessageLines = fileSystem.File.ReadAllLines(commitMessageFile.FullName);
+        var commitMessageConfigContent = fileSystem.File.ReadAllText(
+            commitMessageConfigFile.FullName
+        );
         var commitMessageConfigRoot = JsonSerializer.Deserialize<CommitMessageConfigRoot>(
             commitMessageConfigContent,
             new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.KebabCaseLower }
