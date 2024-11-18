@@ -30,21 +30,9 @@
     <Using Include="NUnit.Framework" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="TestFiles\" />
     <Folder Include="IntegrationTests\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\CommitLint.Net\CommitLint.Net.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="TestFiles\commit.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="TestFiles\commit-message-config.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="TestFiles\commit-with-body.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 </Project>
