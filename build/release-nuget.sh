@@ -84,9 +84,8 @@ Version tag will be added to the last commit. [y/$(underline "n")] "
         echo "Exiting without publishing."
         exit 1
     fi
-    dotnet nuget push "$WORKING_DIR"/nupkg/*.nupkg --api-key "$NUGET_API_KEY" --source "$NUGET_SOURCE"
-
     PACKAGE_NAME=$(get_package_name)
+    dotnet nuget push "$WORKING_DIR"/nupkg/"$PACKAGE_NAME"."$VERSION".nupkg --api-key "$NUGET_API_KEY" --source "$NUGET_SOURCE"
 
     echo "Published NuGet package: https://www.nuget.org/packages/$PACKAGE_NAME/$VERSION"
 }
