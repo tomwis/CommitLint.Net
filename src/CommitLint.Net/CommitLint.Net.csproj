@@ -11,9 +11,13 @@
     <PackageOutputPath>./nupkg</PackageOutputPath>
     <Version>0.1.0</Version>
     <PackageId>CommitLint.Net</PackageId>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="CommandLineParser" />
     <PackageReference Include="TestableIO.System.IO.Abstractions.Wrappers" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="../../README.md" Pack="true" PackagePath="\"/>
   </ItemGroup>
 </Project>
