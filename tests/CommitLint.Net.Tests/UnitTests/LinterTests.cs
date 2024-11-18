@@ -392,10 +392,6 @@ public class LinterTests
 
     private class CommitMessage(IFileSystem fileSystem)
     {
-        internal string TooLongSubject =>
-            "feat: this is a feature commit that adds some functionality and has subject line that is longer than 90 characters".ToCommitFile(
-                fileSystem
-            );
         internal string SubjectWithTypeAndDescription =>
             "feat: description".ToCommitFile(fileSystem);
 
