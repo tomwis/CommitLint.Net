@@ -4,9 +4,11 @@ internal record ValidationResult
 {
     private ValidationResult() { }
 
-    public bool IsValid { get; init; }
+    public bool IsValid { get; private init; }
+    public string? Message { get; private init; }
 
     public static ValidationResult Valid() => new() { IsValid = true };
 
-    public static ValidationResult Invalid() => new() { IsValid = false };
+    public static ValidationResult Invalid(string? resultMessage) =>
+        new() { IsValid = false, Message = resultMessage };
 }

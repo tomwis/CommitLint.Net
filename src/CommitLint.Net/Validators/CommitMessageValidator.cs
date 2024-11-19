@@ -1,9 +1,10 @@
 using CommitLint.Net.Models;
 using CommitLint.Net.Rules;
+using CommitLint.Net.Rules.Models;
 
 namespace CommitLint.Net.Validators;
 
-internal class CommitMessageValidator(CommitMessageConfig? config) : IValidator
+internal class CommitMessageValidator(CommitMessageConfig? config)
 {
     private readonly List<IRule> _rules =
     [
@@ -21,7 +22,7 @@ internal class CommitMessageValidator(CommitMessageConfig? config) : IValidator
             var result = rule.IsValid(commitMessageLines);
             if (!result.IsValid)
             {
-                return ValidationResult.Invalid();
+                return ValidationResult.Invalid(result.Message);
             }
         }
 

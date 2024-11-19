@@ -15,7 +15,9 @@ public sealed class Linter
 
         if (!result.IsValid)
         {
-            throw new CommitFormatException("Commit message is in invalid format.");
+            throw new CommitFormatException(
+                $"Commit message is in invalid format. Error: {result.Message}"
+            );
         }
     }
 

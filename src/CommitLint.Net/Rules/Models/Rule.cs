@@ -1,4 +1,4 @@
-namespace CommitLint.Net.Rules;
+namespace CommitLint.Net.Rules.Models;
 
 public abstract class Rule<T>(T? config) : IRule
 {
