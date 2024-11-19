@@ -3,7 +3,7 @@ using CommitLint.Net.Rules.Models;
 
 namespace CommitLint.Net.Rules;
 
-public sealed class TypeValidationRule(ConventionalCommitConfig? config)
+public sealed class TypeRule(ConventionalCommitConfig? config)
     : Rule<ConventionalCommitConfig>(config)
 {
     private const string SubjectSeparator = ": ";

@@ -9,10 +9,10 @@ internal class CommitMessageValidator(CommitMessageConfig? config)
     private readonly List<IRule> _rules =
     [
         new MaxSubjectLengthRule(config?.MaxSubjectLength),
-        new TypeValidationRule(config?.ConventionalCommit),
-        new DescriptionNotEmptyValidationRule(config?.ConventionalCommit),
-        new BlankLineBetweenSubjectAndBodyValidationRule(config?.ConventionalCommit),
-        new BodyNotEmptyValidationRule(config?.ConventionalCommit),
+        new TypeRule(config?.ConventionalCommit),
+        new DescriptionNotEmptyRule(config?.ConventionalCommit),
+        new BlankLineBetweenSubjectAndBodyRule(config?.ConventionalCommit),
+        new BodyNotEmptyRule(config?.ConventionalCommit),
     ];
 
     public ValidationResult Validate(string[] commitMessageLines)
