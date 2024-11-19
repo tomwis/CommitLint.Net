@@ -2,7 +2,7 @@ using FluentAssertions;
 
 namespace CommitLint.Net.Tests.UnitTests.LinterRulesTests;
 
-public class BlankLineBetweenSubjectAndBodyTests : LinterRulesTestsBase
+public class BlankLineBeforeBodyTests : LinterRulesTestsBase
 {
     [Test]
     public void When_CC_CommitMessageHasBodyWithout1BlankLineFromSubject_ThenThrowCommitFormatException()

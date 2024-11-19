@@ -3,7 +3,7 @@ using CommitLint.Net.Rules.Models;
 
 namespace CommitLint.Net.Rules;
 
-public sealed class BlankLineBetweenSubjectAndBodyRule(ConventionalCommitConfig? config)
+public sealed class BlankLineBeforeBodyRule(ConventionalCommitConfig? config)
     : Rule<ConventionalCommitConfig>(config)
 {
     public override bool IsEnabled => Config?.Enabled ?? false;
