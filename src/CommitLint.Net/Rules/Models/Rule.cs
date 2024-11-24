@@ -9,7 +9,7 @@ public abstract class Rule<T>(T? config) : IRule
     public abstract bool IsEnabled { get; }
     public string Name => GetType().Name;
 
-    public virtual RuleValidationResult IsValid(string[] commitMessageLines)
+    public RuleValidationResult IsValid(string[] commitMessageLines)
     {
         LogStart();
         if (Config is null)

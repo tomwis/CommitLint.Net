@@ -10,6 +10,7 @@ internal class CommitMessageValidator(CommitMessageConfig? config)
     [
         new MaxSubjectLengthRule(config?.MaxSubjectLength),
         new TypeRule(config?.ConventionalCommit),
+        new ScopeRule(config?.ConventionalCommit),
         new DescriptionNotEmptyRule(config?.ConventionalCommit),
         new BlankLineBeforeBodyRule(config?.ConventionalCommit),
         new BodyNotEmptyRule(config?.ConventionalCommit),
