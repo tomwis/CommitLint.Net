@@ -1,8 +1,6 @@
-using System.Collections.Generic;
 using CommitLint.Net.Models;
 using CommitLint.Net.Validators;
 using FluentAssertions;
-using NUnit.Framework;
 
 namespace CommitLint.Net.Tests.UnitTests.ValidatorsTests
 {
