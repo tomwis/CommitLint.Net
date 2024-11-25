@@ -21,6 +21,25 @@ namespace CommitLint.Net.Tests.UnitTests.ValidatorsTests
             "BREAKING CHANGE: some breaking change"
         )]
         [TestCase("docs: readme update", "", "BREAKING CHANGE: other breaking change")]
+        [TestCase(
+            "docs: readme update",
+            "",
+            "body of valid commit message",
+            "",
+            "Footer: some info"
+        )]
+        [TestCase("docs: readme update", "", "Closes #124")]
+        [TestCase("feat: description", "", "body of valid commit message", "", "Closes #124")]
+        [TestCase("feat: description", "", "Footer1: some info", "Footer2: some info")]
+        [TestCase(
+            "feat: description",
+            "",
+            "body of valid commit message",
+            "",
+            "Signed-off-by: Author <author@example.com>",
+            "",
+            "Co-authored-by: Contributor <contributor@example.com>"
+        )]
         public void WhenCommitMessageIsValid_ThenReturnValidResult(
             params string[] commitMessageLines
         )
@@ -144,6 +163,26 @@ namespace CommitLint.Net.Tests.UnitTests.ValidatorsTests
                 "feat: description",
                 "",
                 "breaking change: some breaking change",
+            ];
+
+            // Act
+            var result = subject.Validate(commitMessageLines);
+
+            // Assert
+            result.IsValid.Should().BeFalse();
+        }
+
+        [Test]
+        public void WhenFirstFooterDoesNotHaveBlankLine_ThenReturnInvalidResult()
+        {
+            // Arrange
+            var subject = new CommitMessageValidator(GetConfig());
+            string[] commitMessageLines =
+            [
+                "feat: description",
+                "",
+                "body of valid commit message",
+                "footer: without colon",
             ];
 
             // Act
