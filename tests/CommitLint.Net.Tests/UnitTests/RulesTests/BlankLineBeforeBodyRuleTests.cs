@@ -37,16 +37,19 @@ public class BlankLineBeforeBodyRuleTests
         result.IsValid.Should().BeTrue();
     }
 
-    [Test]
-    public void WhenThereIsBlankLineBeforeBody_AndRuleIsEnabled_ThenRuleIsValid()
+    [TestCase("feat: description", "", "Body")]
+    [TestCase("feat: description", "", "Body line 1", "Body line 2")]
+    [TestCase("feat: description", "", "Body line 1", "", "Body line after blank line")]
+    public void WhenThereIsBlankLineBeforeBody_AndRuleIsEnabled_ThenRuleIsValid(
+        params string[] commitMessageLines
+    )
     {
         // Arrange
         var config = new ConventionalCommitConfig { Enabled = true };
         var rule = new BlankLineBeforeBodyRule(config);
-        string[] commitMessage = ["feat: description", "", "Body"];
 
         // Act
-        var result = rule.IsValid(commitMessage);
+        var result = rule.IsValid(commitMessageLines);
 
         // Assert
         result.IsValid.Should().BeTrue();
