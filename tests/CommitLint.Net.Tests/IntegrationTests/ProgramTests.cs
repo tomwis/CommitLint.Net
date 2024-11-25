@@ -1,12 +1,4 @@
-using System;
-using System.IO.Abstractions;
-using System.IO.Abstractions.TestingHelpers;
-using System.Text.Json;
-using CommandLine;
-using CommitLint.Net;
-using CommitLint.Net.Models;
 using FluentAssertions;
-using NUnit.Framework;
 
 namespace CommitLint.Net.Tests.IntegrationTests;
 

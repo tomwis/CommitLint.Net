@@ -1,5 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
-using CommitLint.Net.Models;
 using CommitLint.Net.Validators;
 
 namespace CommitLint.Net;
