@@ -1,11 +1,7 @@
-using System.Collections.Generic;
 using System.IO.Abstractions.TestingHelpers;
 using System.Text.Json;
-using AutoFixture;
-using CommitLint.Net.Models;
 using CommitLint.Net.Models;
 using FluentAssertions;
-using NUnit.Framework;
 
 namespace CommitLint.Net.Tests.UnitTests;
 

@@ -1,4 +1,3 @@
-using System.Text.RegularExpressions;
 using CommitLint.Net.Models;
 using CommitLint.Net.Rules.Models;
 

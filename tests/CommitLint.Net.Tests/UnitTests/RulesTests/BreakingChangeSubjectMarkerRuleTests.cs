@@ -1,7 +1,6 @@
 using CommitLint.Net.Models;
 using CommitLint.Net.Rules;
 using FluentAssertions;
-using NUnit.Framework;
 
 namespace CommitLint.Net.Tests.UnitTests.RulesTests
 {
