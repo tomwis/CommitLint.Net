@@ -7,7 +7,6 @@ namespace CommitLint.Net.Rules;
 public sealed class ScopeRule(ConventionalCommitConfig? config)
     : Rule<ConventionalCommitConfig>(config)
 {
-    private const string SubjectSeparator = ": ";
     public override bool IsEnabled => Config?.Enabled ?? false;
 
     private RuleValidationResult FormatFailure() =>
@@ -17,7 +16,7 @@ public sealed class ScopeRule(ConventionalCommitConfig? config)
 
     protected override RuleValidationResult IsValidInternal(string[] commitMessageLines)
     {
-        var typeAndScope = commitMessageLines[0].Split(SubjectSeparator)[0];
+        var typeAndScope = commitMessageLines[0].Split(RuleConstants.SubjectSeparator)[0];
         var openParenthesisIndex = typeAndScope.IndexOf('(');
         var closeParenthesisIndex = typeAndScope.IndexOf(')');
 

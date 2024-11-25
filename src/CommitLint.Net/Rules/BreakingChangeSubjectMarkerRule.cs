@@ -6,12 +6,11 @@ namespace CommitLint.Net.Rules;
 public sealed class BreakingChangeSubjectMarkerRule(ConventionalCommitConfig? config)
     : Rule<ConventionalCommitConfig>(config)
 {
-    private const string SubjectSeparator = ": ";
     public override bool IsEnabled => Config?.Enabled ?? false;
 
     protected override RuleValidationResult IsValidInternal(string[] commitMessageLines)
     {
-        var typeAndScope = commitMessageLines[0].Split(SubjectSeparator)[0];
+        var typeAndScope = commitMessageLines[0].Split(RuleConstants.SubjectSeparator)[0];
 
         var exclamationCount = typeAndScope.Count(c => c == '!');
         return exclamationCount switch
