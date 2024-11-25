@@ -21,6 +21,23 @@ namespace CommitLint.Net.Tests.UnitTests.RulesTests
             result.IsValid.Should().BeTrue();
         }
 
+        [TestCase("fix: some bug fix", "", "not footer: value")]
+        [TestCase("fix: some bug fix", "", "also not footer #123")]
+        public void WhenSeparatorIsPrecededByMoreThan1Word_ThenLineIsNotTreatedAsFooter(
+            params string[] commitMessageLines
+        )
+        {
+            // Arrange
+            var config = new ConventionalCommitConfig { Enabled = true };
+            var rule = new BlankLineBeforeFootersRule(config);
+
+            // Act
+            var result = rule.IsValid(commitMessageLines);
+
+            // Assert
+            result.IsValid.Should().BeTrue();
+        }
+
         [TestCase("fix: some bug fix", "Some-Footer: value")]
         [TestCase("fix: some bug fix", "Closes #123")]
         [TestCase("fix: some bug fix", "BREAKING CHANGE: some breaking change")]
