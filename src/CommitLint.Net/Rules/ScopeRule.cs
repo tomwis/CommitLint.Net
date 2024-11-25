@@ -26,6 +26,11 @@ public sealed class ScopeRule(ConventionalCommitConfig? config)
             return RuleValidationResult.Success("No scope found.");
         }
 
+        if (typeAndScope.EndsWith('!'))
+        {
+            typeAndScope = typeAndScope[..^1];
+        }
+
         if (!typeAndScope.EndsWith(')'))
             return FormatFailure();
 

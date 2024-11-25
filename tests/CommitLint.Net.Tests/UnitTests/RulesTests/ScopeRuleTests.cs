@@ -92,4 +92,19 @@ public class ScopeRuleTests
         result.IsValid.Should().BeFalse();
         result.Message.Should().NotBeEmpty();
     }
+
+    [Test]
+    public void WhenScopeIsFollowedByExclamationMark_AndRuleIsEnabled_ThenRuleIsValid()
+    {
+        // Arrange
+        var config = new ConventionalCommitConfig { Enabled = true };
+        var rule = new ScopeRule(config);
+        string[] commitMessageLines = ["feat(scope)!: description"];
+
+        // Act
+        var result = rule.IsValid(commitMessageLines);
+
+        // Assert
+        result.IsValid.Should().BeTrue();
+    }
 }

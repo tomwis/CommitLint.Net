@@ -11,6 +11,8 @@ namespace CommitLint.Net.Tests.UnitTests.ValidatorsTests
         [TestCase("fix: valid fix commit message")]
         [TestCase("docs: readme update", "", "body of valid commit message")]
         [TestCase("feat(scope): some update")]
+        [TestCase("feat(scope)!: some update")]
+        [TestCase("feat!: some update")]
         [TestCase(
             "docs: readme update",
             "",

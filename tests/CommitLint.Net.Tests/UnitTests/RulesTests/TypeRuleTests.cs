@@ -148,4 +148,23 @@ public class TypeRuleTests
         // Assert
         result.IsValid.Should().BeFalse();
     }
+
+    [Test]
+    public void WhenTypeIsFollowedByExclamationMark_AndRuleIsEnabled_ThenRuleIsValid()
+    {
+        // Arrange
+        var config = new ConventionalCommitConfig
+        {
+            Enabled = true,
+            Types = ["feat", "fix", "refactor"],
+        };
+        var rule = new TypeRule(config);
+        string[] commitMessageLines = ["feat!: description"];
+
+        // Act
+        var result = rule.IsValid(commitMessageLines);
+
+        // Assert
+        result.IsValid.Should().BeTrue();
+    }
 }

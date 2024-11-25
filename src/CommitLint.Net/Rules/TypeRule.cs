@@ -14,6 +14,11 @@ public sealed class TypeRule(ConventionalCommitConfig? config)
         var allowedTypes = Config!.Types?.Select(p => p.ToLowerInvariant()).ToList();
 
         var commitType = commitMessageLines[0].Split(SubjectSeparator)[0].Split('(')[0];
+        if (commitType.EndsWith('!'))
+        {
+            commitType = commitType[..^1];
+        }
+
         if (allowedTypes is not null && allowedTypes.All(t => t != commitType))
         {
             return RuleValidationResult.Failure(
