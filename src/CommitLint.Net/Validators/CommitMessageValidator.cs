@@ -9,6 +9,7 @@ internal class CommitMessageValidator(CommitMessageConfig? config)
     private readonly List<IRule> _rules =
     [
         new MaxSubjectLengthRule(config?.MaxSubjectLength),
+        new BreakingChangeSubjectMarkerRule(config?.ConventionalCommit),
         new TypeRule(config?.ConventionalCommit),
         new ScopeRule(config?.ConventionalCommit),
         new DescriptionNotEmptyRule(config?.ConventionalCommit),

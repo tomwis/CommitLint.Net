@@ -111,6 +111,20 @@ namespace CommitLint.Net.Tests.UnitTests.ValidatorsTests
             result.IsValid.Should().BeFalse();
         }
 
+        [Test]
+        public void WhenTypeAndScopePrefixHasInvalidBreakingChangeMarker_ThenReturnInvalidResult()
+        {
+            // Arrange
+            var subject = new CommitMessageValidator(GetConfig());
+            string[] commitMessageLines = ["feat!(scope): description"];
+
+            // Act
+            var result = subject.Validate(commitMessageLines);
+
+            // Assert
+            result.IsValid.Should().BeFalse();
+        }
+
         private static CommitMessageConfig GetConfig(int? maxSubjectLength = null)
         {
             return new CommitMessageConfig
