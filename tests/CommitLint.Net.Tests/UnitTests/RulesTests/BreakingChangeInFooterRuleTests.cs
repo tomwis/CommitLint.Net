@@ -6,8 +6,11 @@ namespace CommitLint.Net.Tests.UnitTests.RulesTests
 {
     public class BreakingChangeInFooterRuleTests
     {
-        [Test]
-        public void WhenBreakingChangeFooterHasValidTokenAndContent_ThenRuleIsValid()
+        [TestCase("BREAKING CHANGE")]
+        [TestCase("BREAKING-CHANGE")]
+        public void WhenBreakingChangeFooterHasValidTokenAndContent_ThenRuleIsValid(
+            string breakingChangeToken
+        )
         {
             // Arrange
             var config = new ConventionalCommitConfig { Enabled = true };
@@ -16,7 +19,7 @@ namespace CommitLint.Net.Tests.UnitTests.RulesTests
             [
                 "feat: description",
                 "",
-                "BREAKING CHANGE: some breaking change",
+                $"{breakingChangeToken}: some breaking change",
             ];
 
             // Act
@@ -43,17 +46,16 @@ namespace CommitLint.Net.Tests.UnitTests.RulesTests
             result.IsValid.Should().BeTrue();
         }
 
-        [Test]
-        public void WhenBreakingChangeTokenIsNotPrecededByBlankLine_ThenRuleIsNotValid()
+        [TestCase("BREAKING CHANGE")]
+        [TestCase("BREAKING-CHANGE")]
+        public void WhenBreakingChangeFooterContentIsEmpty_ThenRuleIsNotValid(
+            string breakingChangeToken
+        )
         {
             // Arrange
             var config = new ConventionalCommitConfig { Enabled = true };
             var rule = new BreakingChangeInFooterRule(config);
-            string[] commitMessageLines =
-            [
-                "feat: description",
-                "BREAKING CHANGE: some breaking change",
-            ];
+            string[] commitMessageLines = ["feat: description", "", $"{breakingChangeToken}: "];
 
             // Act
             var result = rule.IsValid(commitMessageLines);
@@ -62,50 +64,16 @@ namespace CommitLint.Net.Tests.UnitTests.RulesTests
             result.IsValid.Should().BeFalse();
         }
 
-        [Test]
-        public void WhenBreakingChangeFooterContentIsEmpty_ThenRuleIsNotValid()
+        [TestCase("BREAKING CHANGE")]
+        [TestCase("BREAKING-CHANGE")]
+        public void WhenBreakingChangeFooterContentIsWhitespace_ThenRuleIsNotValid(
+            string breakingChangeToken
+        )
         {
             // Arrange
             var config = new ConventionalCommitConfig { Enabled = true };
             var rule = new BreakingChangeInFooterRule(config);
-            string[] commitMessageLines = ["feat: description", "", "BREAKING CHANGE: "];
-
-            // Act
-            var result = rule.IsValid(commitMessageLines);
-
-            // Assert
-            result.IsValid.Should().BeFalse();
-        }
-
-        [Test]
-        public void WhenBreakingChangeFooterContentIsWhitespace_ThenRuleIsNotValid()
-        {
-            // Arrange
-            var config = new ConventionalCommitConfig { Enabled = true };
-            var rule = new BreakingChangeInFooterRule(config);
-            string[] commitMessageLines = ["feat: description", "", "BREAKING CHANGE:    "];
-
-            // Act
-            var result = rule.IsValid(commitMessageLines);
-
-            // Assert
-            result.IsValid.Should().BeFalse();
-        }
-
-        [Test]
-        public void WhenThereAreMultipleBreakingChangeFooters_ThenRuleIsNotValid()
-        {
-            // Arrange
-            var config = new ConventionalCommitConfig { Enabled = true };
-            var rule = new BreakingChangeInFooterRule(config);
-            string[] commitMessageLines =
-            [
-                "feat: description",
-                "",
-                "BREAKING CHANGE: some breaking change",
-                "",
-                "BREAKING CHANGE: another breaking change",
-            ];
+            string[] commitMessageLines = ["feat: description", "", $"{breakingChangeToken}:    "];
 
             // Act
             var result = rule.IsValid(commitMessageLines);
@@ -118,6 +86,10 @@ namespace CommitLint.Net.Tests.UnitTests.RulesTests
         [TestCase("Breaking Change")]
         [TestCase("Breaking change")]
         [TestCase("bReAkInG cHaNgE")]
+        [TestCase("breaking-change")]
+        [TestCase("Breaking-Change")]
+        [TestCase("Breaking-change")]
+        [TestCase("bReAkInG-cHaNgE")]
         public void WhenBreakingChangeFooterTokenIsNotUppercase_ThenRuleIsNotValid(
             string breakingChangeToken
         )

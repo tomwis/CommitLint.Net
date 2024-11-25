@@ -191,7 +191,7 @@ namespace CommitLint.Net.Tests.UnitTests.ValidatorsTests
                 "",
                 "BREAKING CHANGE: some breaking change",
             ];
-            yield return ["docs: readme update", "", "BREAKING CHANGE: other breaking change"];
+            yield return ["docs: readme update", "", "BREAKING-CHANGE: other breaking change"];
             yield return
             [
                 "docs: readme update",

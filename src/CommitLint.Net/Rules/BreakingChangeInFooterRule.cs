@@ -6,26 +6,22 @@ namespace CommitLint.Net.Rules;
 public class BreakingChangeInFooterRule(ConventionalCommitConfig? config)
     : Rule<ConventionalCommitConfig>(config)
 {
+    private const string BreakingChangeToken = "BREAKING CHANGE: ";
+    private const string BreakingChangeHyphenToken = "BREAKING-CHANGE: ";
+
     public override bool IsEnabled => Config?.Enabled ?? false;
 
     protected override RuleValidationResult IsValidInternal(string[] commitMessageLines)
     {
-        const string breakingChangeToken = "BREAKING CHANGE: ";
-        var linesWithBreakingChangeTokenCaseInsensitive = commitMessageLines
-            .Where(line => line.StartsWith(breakingChangeToken, StringComparison.OrdinalIgnoreCase))
-            .ToList();
-
-        var tokens = linesWithBreakingChangeTokenCaseInsensitive.Select(line =>
-            line.Substring(0, breakingChangeToken.Length)
-        );
-
-        if (tokens.Any(token => token != breakingChangeToken))
+        if (!IsTokenUppercase(commitMessageLines))
         {
             return RuleValidationResult.Failure("BREAKING CHANGE token must be in upper case.");
         }
 
         var linesWithBreakingChangeToken = commitMessageLines
-            .Where(line => line.StartsWith(breakingChangeToken))
+            .Where(line =>
+                line.StartsWith(BreakingChangeToken) || line.StartsWith(BreakingChangeHyphenToken)
+            )
             .ToList();
 
         if (linesWithBreakingChangeToken.Count == 0)
@@ -33,36 +29,33 @@ public class BreakingChangeInFooterRule(ConventionalCommitConfig? config)
             return RuleValidationResult.Success("No BREAKING CHANGE footer found.");
         }
 
-        if (linesWithBreakingChangeToken.Count > 1)
+        foreach (var breakingChangeFooter in linesWithBreakingChangeToken)
         {
-            return RuleValidationResult.Failure("Only one BREAKING CHANGE footer is allowed.");
-        }
-
-        var breakingChangeTokenIndex = commitMessageLines
-            .ToList()
-            .IndexOf(linesWithBreakingChangeToken[0]);
-        if (breakingChangeTokenIndex == 0)
-        {
-            return RuleValidationResult.Failure("BREAKING CHANGE token cannot be in subject.");
-        }
-
-        if (!string.IsNullOrEmpty(commitMessageLines[breakingChangeTokenIndex - 1]))
-        {
-            return RuleValidationResult.Failure(
-                "BREAKING CHANGE footer must have blank line before."
-            );
-        }
-
-        var breakingChangeFooter = commitMessageLines[breakingChangeTokenIndex];
-        var breakingChangeDescription = breakingChangeFooter[breakingChangeToken.Length..];
-
-        if (string.IsNullOrWhiteSpace(breakingChangeDescription))
-        {
-            return RuleValidationResult.Failure(
-                "BREAKING CHANGE footer content shouldn't be empty."
-            );
+            var breakingChangeDescription = breakingChangeFooter[BreakingChangeToken.Length..];
+            if (string.IsNullOrWhiteSpace(breakingChangeDescription))
+            {
+                return RuleValidationResult.Failure(
+                    "BREAKING CHANGE footer content shouldn't be empty."
+                );
+            }
         }
 
         return RuleValidationResult.Success();
+    }
+
+    private static bool IsTokenUppercase(string[] commitMessageLines)
+    {
+        var linesWithBreakingChangeTokenCaseInsensitive = commitMessageLines
+            .Where(line =>
+                line.StartsWith(BreakingChangeToken, StringComparison.OrdinalIgnoreCase)
+                || line.StartsWith(BreakingChangeHyphenToken, StringComparison.OrdinalIgnoreCase)
+            )
+            .ToList();
+
+        var tokens = linesWithBreakingChangeTokenCaseInsensitive.Select(line =>
+            line[..BreakingChangeToken.Length]
+        );
+
+        return tokens.All(token => token is BreakingChangeToken or BreakingChangeHyphenToken);
     }
 }
