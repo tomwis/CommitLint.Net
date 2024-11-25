@@ -10,6 +10,15 @@ namespace CommitLint.Net.Tests.UnitTests.ValidatorsTests
         [TestCase("feat: valid commit message")]
         [TestCase("fix: valid fix commit message")]
         [TestCase("docs: readme update", "", "body of valid commit message")]
+        [TestCase("feat(scope): some update")]
+        [TestCase(
+            "docs: readme update",
+            "",
+            "body of valid commit message",
+            "",
+            "BREAKING CHANGE: some breaking change"
+        )]
+        [TestCase("docs: readme update", "", "BREAKING CHANGE: other breaking change")]
         public void WhenCommitMessageIsValid_ThenReturnValidResult(
             params string[] commitMessageLines
         )
@@ -115,6 +124,25 @@ namespace CommitLint.Net.Tests.UnitTests.ValidatorsTests
             // Arrange
             var subject = new CommitMessageValidator(GetConfig());
             string[] commitMessageLines = ["feat!(scope): description"];
+
+            // Act
+            var result = subject.Validate(commitMessageLines);
+
+            // Assert
+            result.IsValid.Should().BeFalse();
+        }
+
+        [Test]
+        public void WhenBreakingChangeTokenIsNotUppercase_ThenReturnInvalidResult()
+        {
+            // Arrange
+            var subject = new CommitMessageValidator(GetConfig());
+            string[] commitMessageLines =
+            [
+                "feat: description",
+                "",
+                "breaking change: some breaking change",
+            ];
 
             // Act
             var result = subject.Validate(commitMessageLines);
