@@ -7,42 +7,8 @@ namespace CommitLint.Net.Tests.UnitTests.ValidatorsTests
     [TestFixture]
     public class CommitMessageValidatorTests
     {
-        [TestCase("feat: valid commit message")]
-        [TestCase("fix: valid fix commit message")]
-        [TestCase("docs: readme update", "", "body of valid commit message")]
-        [TestCase("feat(scope): some update")]
-        [TestCase("feat(scope)!: some update")]
-        [TestCase("feat!: some update")]
-        [TestCase(
-            "docs: readme update",
-            "",
-            "body of valid commit message",
-            "",
-            "BREAKING CHANGE: some breaking change"
-        )]
-        [TestCase("docs: readme update", "", "BREAKING CHANGE: other breaking change")]
-        [TestCase(
-            "docs: readme update",
-            "",
-            "body of valid commit message",
-            "",
-            "Footer: some info"
-        )]
-        [TestCase("docs: readme update", "", "Closes #124")]
-        [TestCase("feat: description", "", "body of valid commit message", "", "Closes #124")]
-        [TestCase("feat: description", "", "Footer1: some info", "Footer2: some info")]
-        [TestCase(
-            "feat: description",
-            "",
-            "body of valid commit message",
-            "",
-            "Signed-off-by: Author <author@example.com>",
-            "",
-            "Co-authored-by: Contributor <contributor@example.com>"
-        )]
-        public void WhenCommitMessageIsValid_ThenReturnValidResult(
-            params string[] commitMessageLines
-        )
+        [TestCaseSource(nameof(ValidCommitMessages))]
+        public void WhenCommitMessageIsValid_ThenReturnValidResult(string[] commitMessageLines)
         {
             // Arrange
             var subject = new CommitMessageValidator(GetConfig());
@@ -207,6 +173,53 @@ namespace CommitLint.Net.Tests.UnitTests.ValidatorsTests
                     Types = ["feat", "fix", "docs"],
                 },
             };
+        }
+
+        private static IEnumerable<string[]> ValidCommitMessages()
+        {
+            yield return ["feat: valid commit message"];
+            yield return ["fix: valid fix commit message"];
+            yield return ["docs: readme update", "", "body of valid commit message"];
+            yield return ["feat(scope): some update"];
+            yield return ["feat(scope)!: some update"];
+            yield return ["feat!: some update"];
+            yield return
+            [
+                "docs: readme update",
+                "",
+                "body of valid commit message",
+                "",
+                "BREAKING CHANGE: some breaking change",
+            ];
+            yield return ["docs: readme update", "", "BREAKING CHANGE: other breaking change"];
+            yield return
+            [
+                "docs: readme update",
+                "",
+                "body of valid commit message",
+                "",
+                "Footer: some info",
+            ];
+            yield return ["docs: readme update", "", "Closes #124"];
+            yield return
+            [
+                "feat: description",
+                "",
+                "body of valid commit message",
+                "",
+                "Closes #124",
+            ];
+            yield return ["feat: description", "", "Footer1: some info", "Footer2: some info"];
+            yield return
+            [
+                "feat: description",
+                "",
+                "body of valid commit message",
+                "",
+                "Signed-off-by: Author <author@example.com>",
+                "",
+                "Co-authored-by: Contributor <contributor@example.com>",
+            ];
         }
     }
 }
