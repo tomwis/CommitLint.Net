@@ -2,8 +2,6 @@
 
 It is a dotnet tool for validating commit messages according to [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) specification. It can be used in git hook, for example with [Husky.NET](https://alirezanet.github.io/Husky.Net/). It is also included in [xpd](https://github.com/tomwis/xpd) project.
 
-It doesn't have a full set of rules yet.
-
 ## How to use
 
 ### Install
@@ -29,6 +27,7 @@ Create file `commit-message-config.json` with following content:
     }
 }
 ```
+
 These are currently supported options.
 
 ### Configure Husky.NET
@@ -37,8 +36,9 @@ Install & configure Husky.NET:
 ```
 dotnet tool install Husky.Net
 dotnet husky install
-dotnet husky run --group commit-msg
+dotnet husky add commit-msg -c "dotnet husky run --group commit-msg --args \"\$1\""
 ```
+
 Then in `.husky/task-runner.json` add task to run linter:
 ```
 {
@@ -59,6 +59,7 @@ Then in `.husky/task-runner.json` add task to run linter:
   ]
 }
 ```
+`path/to/commit-message-config.json` is relative to root of yout repo.
 
 ### Direct usage
 
