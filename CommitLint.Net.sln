@@ -38,12 +38,13 @@ Global
 		{C26BA2F6-4CB6-45F8-A732-6E5183B95837} = {79EF03E7-0DE9-4436-A979-4E31AD63F2BC}
 	EndGlobalSection
 EndGlobal
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionSettings", "SolutionSettings", "692A1240-50CF-4CC3-B7A8-310A97DF4F6C"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionSettings", "SolutionSettings", "{692A1240-50CF-4CC3-B7A8-310A97DF4F6C}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		.gitignore = .gitignore
 		Directory.Build.targets = Directory.Build.targets
 		Directory.Packages.props = Directory.Packages.props
 		task-runner.json = .husky/task-runner.json
+		config\commit-message-config.json = config\commit-message-config.json
 	EndProjectSection
 EndProject
