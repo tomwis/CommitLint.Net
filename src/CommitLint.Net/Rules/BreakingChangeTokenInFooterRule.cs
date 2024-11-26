@@ -3,7 +3,7 @@ using CommitLint.Net.Rules.Models;
 
 namespace CommitLint.Net.Rules;
 
-public class BreakingChangeInFooterRule(ConventionalCommitConfig? config)
+public class BreakingChangeTokenInFooterRule(ConventionalCommitConfig? config)
     : Rule<ConventionalCommitConfig>(config)
 {
     private const string BreakingChangeToken = "BREAKING CHANGE: ";
@@ -13,31 +13,29 @@ public class BreakingChangeInFooterRule(ConventionalCommitConfig? config)
 
     protected override RuleValidationResult IsValidInternal(string[] commitMessageLines)
     {
-        if (!IsTokenUppercase(commitMessageLines))
-        {
-            return RuleValidationResult.Failure("BREAKING CHANGE token must be in upper case.");
-        }
-
-        var linesWithBreakingChangeToken = commitMessageLines
+        var linesWithBreakingChangeTokenCaseInsensitive = commitMessageLines
             .Where(line =>
-                line.StartsWith(BreakingChangeToken) || line.StartsWith(BreakingChangeHyphenToken)
+                line.StartsWith(BreakingChangeToken, StringComparison.OrdinalIgnoreCase)
+                || line.StartsWith(BreakingChangeHyphenToken, StringComparison.OrdinalIgnoreCase)
             )
             .ToList();
 
-        if (linesWithBreakingChangeToken.Count == 0)
+        if (linesWithBreakingChangeTokenCaseInsensitive.Count == 0)
         {
             return RuleValidationResult.Success("No BREAKING CHANGE footer found.");
         }
 
-        foreach (var breakingChangeFooter in linesWithBreakingChangeToken)
+        var breakingChangeTokens = linesWithBreakingChangeTokenCaseInsensitive.Select(line =>
+            line[..BreakingChangeToken.Length]
+        );
+
+        var areAllTokensUppercase = breakingChangeTokens.All(token =>
+            token is BreakingChangeToken or BreakingChangeHyphenToken
+        );
+
+        if (!areAllTokensUppercase)
         {
-            var breakingChangeDescription = breakingChangeFooter[BreakingChangeToken.Length..];
-            if (string.IsNullOrWhiteSpace(breakingChangeDescription))
-            {
-                return RuleValidationResult.Failure(
-                    "BREAKING CHANGE footer content shouldn't be empty."
-                );
-            }
+            return RuleValidationResult.Failure("BREAKING CHANGE token must be in upper case.");
         }
 
         return RuleValidationResult.Success();

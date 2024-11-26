@@ -15,7 +15,7 @@ internal class CommitMessageValidator(CommitMessageConfig? config)
         new DescriptionNotEmptyRule(config?.ConventionalCommit),
         new BlankLineBeforeBodyRule(config?.ConventionalCommit),
         new BodyNotEmptyRule(config?.ConventionalCommit),
-        new BreakingChangeInFooterRule(config?.ConventionalCommit),
+        new BreakingChangeTokenInFooterRule(config?.ConventionalCommit),
         new BlankLineBeforeFootersRule(config?.ConventionalCommit),
     ];
 

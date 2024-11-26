@@ -4,17 +4,17 @@ using FluentAssertions;
 
 namespace CommitLint.Net.Tests.UnitTests.RulesTests
 {
-    public class BreakingChangeInFooterRuleTests
+    public class BreakingChangeTokenInFooterRuleTests
     {
         [TestCase("BREAKING CHANGE")]
         [TestCase("BREAKING-CHANGE")]
-        public void WhenBreakingChangeFooterHasValidTokenAndContent_ThenRuleIsValid(
+        public void WhenBreakingChangeFooterHasValidToken_ThenRuleIsValid(
             string breakingChangeToken
         )
         {
             // Arrange
             var config = new ConventionalCommitConfig { Enabled = true };
-            var rule = new BreakingChangeInFooterRule(config);
+            var rule = new BreakingChangeTokenInFooterRule(config);
             string[] commitMessageLines =
             [
                 "feat: description",
@@ -37,49 +37,13 @@ namespace CommitLint.Net.Tests.UnitTests.RulesTests
         {
             // Arrange
             var config = new ConventionalCommitConfig { Enabled = true };
-            var rule = new BreakingChangeInFooterRule(config);
+            var rule = new BreakingChangeTokenInFooterRule(config);
 
             // Act
             var result = rule.IsValid(commitMessageLines);
 
             // Assert
             result.IsValid.Should().BeTrue();
-        }
-
-        [TestCase("BREAKING CHANGE")]
-        [TestCase("BREAKING-CHANGE")]
-        public void WhenBreakingChangeFooterContentIsEmpty_ThenRuleIsNotValid(
-            string breakingChangeToken
-        )
-        {
-            // Arrange
-            var config = new ConventionalCommitConfig { Enabled = true };
-            var rule = new BreakingChangeInFooterRule(config);
-            string[] commitMessageLines = ["feat: description", "", $"{breakingChangeToken}: "];
-
-            // Act
-            var result = rule.IsValid(commitMessageLines);
-
-            // Assert
-            result.IsValid.Should().BeFalse();
-        }
-
-        [TestCase("BREAKING CHANGE")]
-        [TestCase("BREAKING-CHANGE")]
-        public void WhenBreakingChangeFooterContentIsWhitespace_ThenRuleIsNotValid(
-            string breakingChangeToken
-        )
-        {
-            // Arrange
-            var config = new ConventionalCommitConfig { Enabled = true };
-            var rule = new BreakingChangeInFooterRule(config);
-            string[] commitMessageLines = ["feat: description", "", $"{breakingChangeToken}:    "];
-
-            // Act
-            var result = rule.IsValid(commitMessageLines);
-
-            // Assert
-            result.IsValid.Should().BeFalse();
         }
 
         [TestCase("breaking change")]
@@ -96,7 +60,7 @@ namespace CommitLint.Net.Tests.UnitTests.RulesTests
         {
             // Arrange
             var config = new ConventionalCommitConfig { Enabled = true };
-            var rule = new BreakingChangeInFooterRule(config);
+            var rule = new BreakingChangeTokenInFooterRule(config);
             string[] commitMessageLines =
             [
                 "feat: description",
