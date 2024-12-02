@@ -12,7 +12,13 @@ public class Program
             .Default.ParseArguments<Options>(args)
             .WithParsed(o =>
             {
-                var configFileName = o.CommitMessageConfigFileName ?? GetDefaultConfig();
+                var configFileName = o.CommitMessageConfigFileName;
+                if (string.IsNullOrWhiteSpace(configFileName))
+                {
+                    Console.WriteLine("No config file provided. Using default config.");
+                    configFileName = GetDefaultConfig();
+                }
+
                 var linterConfig = new LinterConfig(o.CommitMessageFileName, configFileName);
                 new Linter().Run(linterConfig);
             })
