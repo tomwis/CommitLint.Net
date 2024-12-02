@@ -12,10 +12,8 @@ public class Program
             .Default.ParseArguments<Options>(args)
             .WithParsed(o =>
             {
-                var linterConfig = new LinterConfig(
-                    o.CommitMessageFileName,
-                    o.CommitMessageConfigFileName
-                );
+                var configFileName = o.CommitMessageConfigFileName ?? GetDefaultConfig();
+                var linterConfig = new LinterConfig(o.CommitMessageFileName, configFileName);
                 new Linter().Run(linterConfig);
             })
             .WithNotParsed(errors =>
@@ -24,5 +22,15 @@ public class Program
             });
 
         return exitCode;
+    }
+
+    private static string GetDefaultConfig()
+    {
+        return Path.Combine(
+            AppContext.BaseDirectory,
+            "content",
+            "config",
+            "commit-message-config-default.json"
+        );
     }
 }

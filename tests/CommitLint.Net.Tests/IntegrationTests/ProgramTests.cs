@@ -61,4 +61,17 @@ public class ProgramTests
         // Assert
         action.Should().Throw<FileNotFoundException>();
     }
+
+    [Test]
+    public void WhenMainIsCalledWithEmptyConfigFile_ThenUseDefaultConfig()
+    {
+        // Arrange
+        string[] args = ["--commit-file", "IntegrationTests/Data/sampleCommit.txt"];
+
+        // Act
+        var result = Program.Main(args);
+
+        // Assert
+        result.Should().Be(0);
+    }
 }
