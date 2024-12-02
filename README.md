@@ -10,26 +10,6 @@ dotnet new tool-manifest # if this is your first local dotnet tool in this proje
 dotnet tool install CommitLint.Net
 ```
 
-### Create config
-
-Create file `commit-message-config.json` with following content:
-```
-{
-    "config": {
-        "max-subject-length": {
-            "enabled": true,
-            "value": 90
-        },
-        "conventional-commit": {
-            "enabled": true,
-            "types": [ "feat", "fix", "refactor", "build", "chore", "style", "test", "docs", "perf", "revert" ]
-        }
-    }
-}
-```
-
-These are currently supported options.
-
 ### Configure Husky.NET
 
 Install & configure Husky.NET:
@@ -51,19 +31,56 @@ Then in `.husky/task-runner.json` add task to run linter:
       "args": [
         "commit-lint",
         "--commit-file",
-        "${args}",
-        "--commit-message-config-file",
-        "path/to/commit-message-config.json"
+        "${args}"
       ]
     }
   ]
 }
 ```
-`path/to/commit-message-config.json` is relative to root of yout repo.
+
+
+### Custom config
+
+CommitLint.Net uses default configuration which is the following:
+```
+{
+    "config": {
+        "max-subject-length": {
+            "enabled": true,
+            "value": 90
+        },
+        "conventional-commit": {
+            "enabled": true,
+            "types": [ "feat", "fix", "refactor", "build", "chore", "style", "test", "docs", "perf", "revert" ]
+        }
+    }
+}
+```
+
+If you want to change it, create json file, e.g. `commit-message-config.json` with above content and modify options as needed. Options listed above are all currently supported options.
+
+If you're using Husky, then you'll also need to add this custom config to `task-runner.json` with `--commit-message-config-file` option:
+
+```
+{
+  "name": "commit-message-linter",
+  "group": "commit-msg",
+  "command": "dotnet",
+  "args": [
+    "commit-lint",
+    "--commit-file",
+    "${args}",
+    "--commit-message-config-file",
+    "path/to/commit-message-config.json"
+  ]
+}
+```
+`path/to/commit-message-config.json` is relative to root of your repo.
+
 
 ### Direct usage
 
-If you'd like to use it directly, without husky:
+If you'd like to use it directly, without Husky:
 ```
 dotnet commit-lint --commit-file "path/to/commit-message.txt" --commit-message-config-file "path/to/commit-message-config.json"
 ```
