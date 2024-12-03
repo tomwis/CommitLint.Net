@@ -184,7 +184,7 @@ namespace CommitLint.Net.Tests.UnitTests.ValidatorsTests
                 ConventionalCommit = new ConventionalCommitConfig
                 {
                     Enabled = true,
-                    Types = ["feat", "fix", "docs"],
+                    Types = ["feat", "fix", "docs", "revert"],
                 },
             };
         }
@@ -233,6 +233,12 @@ namespace CommitLint.Net.Tests.UnitTests.ValidatorsTests
                 "Signed-off-by: Author <author@example.com>",
                 "",
                 "Co-authored-by: Contributor <contributor@example.com>",
+            ];
+            yield return
+            [
+                "revert: \"feat: added .Net 7.0 support\"",
+                "",
+                "This reverts commit 80f48f9ac4002cc2fe04670113dc2c53a1775c3d.",
             ];
         }
     }
