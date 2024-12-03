@@ -12,7 +12,7 @@ namespace CommitLint.Net.Tests.UnitTests.RulesTests
             // Arrange
             var config = new ConventionalCommitConfig { Enabled = true };
             var rule = new FootersContentNotEmptyRule(config);
-            string[] commitMessageLines = [""];
+            string[] commitMessageLines = new[] { "" };
 
             // Act
             var result = rule.IsValid(commitMessageLines);
@@ -27,7 +27,7 @@ namespace CommitLint.Net.Tests.UnitTests.RulesTests
             // Arrange
             var config = new ConventionalCommitConfig { Enabled = true };
             var rule = new FootersContentNotEmptyRule(config);
-            string[] commitMessageLines = ["fix: some bug fix", "", "Footer: "];
+            string[] commitMessageLines = new[] { "fix: some bug fix", "", "Footer: " };
 
             // Act
             var result = rule.IsValid(commitMessageLines);
@@ -44,7 +44,7 @@ namespace CommitLint.Net.Tests.UnitTests.RulesTests
             // Arrange
             var config = new ConventionalCommitConfig { Enabled = true };
             var rule = new FootersContentNotEmptyRule(config);
-            string[] commitMessageLines = ["fix: some bug fix", "", footerContent];
+            string[] commitMessageLines = new[] { "fix: some bug fix", "", footerContent };
 
             // Act
             var result = rule.IsValid(commitMessageLines);
@@ -60,7 +60,7 @@ namespace CommitLint.Net.Tests.UnitTests.RulesTests
             // Arrange
             var config = new ConventionalCommitConfig { Enabled = true };
             var rule = new FootersContentNotEmptyRule(config);
-            string[] commitMessageLines = ["fix: some bug fix", "", footerContent];
+            string[] commitMessageLines = new[] { "fix: some bug fix", "", footerContent };
 
             // Act
             var result = rule.IsValid(commitMessageLines);

@@ -4,9 +4,11 @@ using CommitLint.Net.Rules.Models;
 
 namespace CommitLint.Net.Rules;
 
-public partial class FootersContentNotEmptyRule(ConventionalCommitConfig? config)
-    : Rule<ConventionalCommitConfig>(config)
+public partial class FootersContentNotEmptyRule : Rule<ConventionalCommitConfig>
 {
+    public FootersContentNotEmptyRule(ConventionalCommitConfig? config)
+        : base(config) { }
+
     private const string TokenGroupName = "token";
 
     public override bool IsEnabled => Config?.Enabled ?? false;
@@ -42,7 +44,7 @@ public partial class FootersContentNotEmptyRule(ConventionalCommitConfig? config
                 continue;
             }
 
-            validFooters.Add([line]);
+            validFooters.Add(new List<string> { line });
         }
 
         return GenerateValidationResult(invalidFooterMessages, validFooters);

@@ -3,9 +3,11 @@ using CommitLint.Net.Rules.Models;
 
 namespace CommitLint.Net.Rules;
 
-public sealed class BreakingChangeSubjectMarkerRule(ConventionalCommitConfig? config)
-    : Rule<ConventionalCommitConfig>(config)
+public sealed class BreakingChangeSubjectMarkerRule : Rule<ConventionalCommitConfig>
 {
+    public BreakingChangeSubjectMarkerRule(ConventionalCommitConfig? config)
+        : base(config) { }
+
     public override bool IsEnabled => Config?.Enabled ?? false;
 
     protected override RuleValidationResult IsValidInternal(string[] commitMessageLines)

@@ -15,12 +15,12 @@ namespace CommitLint.Net.Tests.UnitTests.RulesTests
             // Arrange
             var config = new ConventionalCommitConfig { Enabled = true };
             var rule = new BreakingChangeTokenInFooterRule(config);
-            string[] commitMessageLines =
-            [
+            string[] commitMessageLines = new[]
+            {
                 "feat: description",
                 "",
                 $"{breakingChangeToken}: some breaking change",
-            ];
+            };
 
             // Act
             var result = rule.IsValid(commitMessageLines);
@@ -61,12 +61,12 @@ namespace CommitLint.Net.Tests.UnitTests.RulesTests
             // Arrange
             var config = new ConventionalCommitConfig { Enabled = true };
             var rule = new BreakingChangeTokenInFooterRule(config);
-            string[] commitMessageLines =
-            [
+            string[] commitMessageLines = new[]
+            {
                 "feat: description",
                 "",
                 $"{breakingChangeToken}: some breaking change",
-            ];
+            };
 
             // Act
             var result = rule.IsValid(commitMessageLines);

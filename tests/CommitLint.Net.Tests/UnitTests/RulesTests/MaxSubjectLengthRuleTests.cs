@@ -27,7 +27,7 @@ public class MaxSubjectLengthRuleTests
         var rule = new MaxSubjectLengthRule(config);
 
         // Act
-        var result = rule.IsValid([message]);
+        var result = rule.IsValid(new[] { message });
 
         // Assert
         result.IsValid.Should().BeFalse();
@@ -55,7 +55,7 @@ public class MaxSubjectLengthRuleTests
         var rule = new MaxSubjectLengthRule(config);
 
         // Act
-        var result = rule.IsValid([message]);
+        var result = rule.IsValid(new[] { message });
 
         // Assert
         result.IsValid.Should().BeTrue();
@@ -67,7 +67,7 @@ public class MaxSubjectLengthRuleTests
         // Arrange
         var config = new MaxSubjectLength { Enabled = false, Value = 1 };
         var rule = new MaxSubjectLengthRule(config);
-        string[] commitMessageLines = ["feat: some description"];
+        string[] commitMessageLines = new[] { "feat: some description" };
 
         // Act
         var result = rule.IsValid(commitMessageLines);

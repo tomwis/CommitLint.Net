@@ -4,9 +4,11 @@ using CommitLint.Net.Rules.Models;
 
 namespace CommitLint.Net.Rules;
 
-public sealed class ScopeRule(ConventionalCommitConfig? config)
-    : Rule<ConventionalCommitConfig>(config)
+public sealed class ScopeRule : Rule<ConventionalCommitConfig>
 {
+    public ScopeRule(ConventionalCommitConfig? config)
+        : base(config) { }
+
     public override bool IsEnabled => Config?.Enabled ?? false;
 
     private RuleValidationResult FormatFailure() =>

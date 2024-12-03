@@ -4,21 +4,26 @@ using CommitLint.Net.Rules.Models;
 
 namespace CommitLint.Net.Validators;
 
-internal class CommitMessageValidator(CommitMessageConfig? config)
+internal class CommitMessageValidator
 {
-    private readonly List<IRule> _rules =
-    [
-        new MaxSubjectLengthRule(config?.MaxSubjectLength),
-        new BreakingChangeSubjectMarkerRule(config?.ConventionalCommit),
-        new TypeRule(config?.ConventionalCommit),
-        new ScopeRule(config?.ConventionalCommit),
-        new DescriptionNotEmptyRule(config?.ConventionalCommit),
-        new BlankLineBeforeBodyRule(config?.ConventionalCommit),
-        new BodyNotEmptyRule(config?.ConventionalCommit),
-        new BreakingChangeTokenInFooterRule(config?.ConventionalCommit),
-        new BlankLineBeforeFootersRule(config?.ConventionalCommit),
-        new FootersContentNotEmptyRule(config?.ConventionalCommit),
-    ];
+    private readonly List<IRule> _rules;
+
+    public CommitMessageValidator(CommitMessageConfig? config)
+    {
+        _rules = new List<IRule>
+        {
+            new MaxSubjectLengthRule(config?.MaxSubjectLength),
+            new BreakingChangeSubjectMarkerRule(config?.ConventionalCommit),
+            new TypeRule(config?.ConventionalCommit),
+            new ScopeRule(config?.ConventionalCommit),
+            new DescriptionNotEmptyRule(config?.ConventionalCommit),
+            new BlankLineBeforeBodyRule(config?.ConventionalCommit),
+            new BodyNotEmptyRule(config?.ConventionalCommit),
+            new BreakingChangeTokenInFooterRule(config?.ConventionalCommit),
+            new BlankLineBeforeFootersRule(config?.ConventionalCommit),
+            new FootersContentNotEmptyRule(config?.ConventionalCommit),
+        };
+    }
 
     public ValidationResult Validate(string[] commitMessageLines)
     {

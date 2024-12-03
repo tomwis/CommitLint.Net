@@ -3,9 +3,11 @@ using CommitLint.Net.Rules.Models;
 
 namespace CommitLint.Net.Rules;
 
-public class BreakingChangeTokenInFooterRule(ConventionalCommitConfig? config)
-    : Rule<ConventionalCommitConfig>(config)
+public class BreakingChangeTokenInFooterRule : Rule<ConventionalCommitConfig>
 {
+    public BreakingChangeTokenInFooterRule(ConventionalCommitConfig? config)
+        : base(config) { }
+
     private const string BreakingChangeToken = "BREAKING CHANGE: ";
     private const string BreakingChangeHyphenToken = "BREAKING-CHANGE: ";
 

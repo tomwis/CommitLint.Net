@@ -3,9 +3,11 @@ using CommitLint.Net.Rules.Models;
 
 namespace CommitLint.Net.Rules;
 
-public sealed class MaxSubjectLengthRule(MaxSubjectLength? maxSubjectLength)
-    : Rule<MaxSubjectLength>(maxSubjectLength)
+public sealed class MaxSubjectLengthRule : Rule<MaxSubjectLength>
 {
+    public MaxSubjectLengthRule(MaxSubjectLength? maxSubjectLength)
+        : base(maxSubjectLength) { }
+
     public override bool IsEnabled => Config?.Enabled ?? false;
 
     protected override RuleValidationResult IsValidInternal(string[] commitMessageLines)

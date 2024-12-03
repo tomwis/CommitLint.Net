@@ -1,11 +1,16 @@
 namespace CommitLint.Net.Rules.Models;
 
-public abstract class Rule<T>(T? config) : IRule
+public abstract class Rule<T> : IRule
 {
+    protected Rule(T? config)
+    {
+        Config = config;
+    }
+
     private const char Checkmark = '\u2714';
     private const char Cross = '\u2718';
 
-    protected T? Config { get; } = config;
+    protected T? Config { get; }
     public abstract bool IsEnabled { get; }
     public string Name => GetType().Name;
 

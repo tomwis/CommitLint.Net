@@ -12,7 +12,7 @@ namespace CommitLint.Net.Tests.UnitTests.RulesTests
             // Arrange
             var config = new ConventionalCommitConfig { Enabled = true };
             var rule = new BlankLineBeforeFootersRule(config);
-            string[] commitMessageLines = ["fix: some bug fix"];
+            string[] commitMessageLines = new[] { "fix: some bug fix" };
 
             // Act
             var result = rule.IsValid(commitMessageLines);

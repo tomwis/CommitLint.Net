@@ -1,3 +1,7 @@
 namespace CommitLint.Net;
 
-internal class CommitFormatException(string message) : Exception(message);
+internal class CommitFormatException : Exception
+{
+    public CommitFormatException(string message)
+        : base(message) { }
+}
