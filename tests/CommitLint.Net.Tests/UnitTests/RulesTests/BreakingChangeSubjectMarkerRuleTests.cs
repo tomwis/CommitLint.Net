@@ -17,7 +17,7 @@ namespace CommitLint.Net.Tests.UnitTests.RulesTests
             var rule = new BreakingChangeSubjectMarkerRule(config);
 
             // Act
-            var result = rule.IsValid(new[] { commitMessage });
+            var result = rule.IsValid([commitMessage]);
 
             // Assert
             result.IsValid.Should().BeTrue();
@@ -37,7 +37,7 @@ namespace CommitLint.Net.Tests.UnitTests.RulesTests
             var rule = new BreakingChangeSubjectMarkerRule(config);
 
             // Act
-            var result = rule.IsValid(new[] { commitMessage });
+            var result = rule.IsValid([commitMessage]);
 
             // Assert
             result.IsValid.Should().BeFalse();
@@ -56,7 +56,7 @@ namespace CommitLint.Net.Tests.UnitTests.RulesTests
             var rule = new BreakingChangeSubjectMarkerRule(config);
 
             // Act
-            var result = rule.IsValid(new[] { commitMessage });
+            var result = rule.IsValid([commitMessage]);
 
             // Assert
             result.IsValid.Should().BeFalse();

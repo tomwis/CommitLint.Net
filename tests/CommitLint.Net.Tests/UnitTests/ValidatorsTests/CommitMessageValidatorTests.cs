@@ -25,7 +25,7 @@ namespace CommitLint.Net.Tests.UnitTests.ValidatorsTests
         {
             // Arrange
             var subject = new CommitMessageValidator(GetConfig());
-            string[] commitMessageLines = new[] { string.Empty };
+            string[] commitMessageLines = [string.Empty];
 
             // Act
             var result = subject.Validate(commitMessageLines);
@@ -40,7 +40,7 @@ namespace CommitLint.Net.Tests.UnitTests.ValidatorsTests
             // Arrange
             var config = GetConfig(maxSubjectLength: 10);
             var subject = new CommitMessageValidator(config);
-            string[] commitMessageLines = new[] { "feat: description" };
+            string[] commitMessageLines = ["feat: description"];
 
             // Act
             var result = subject.Validate(commitMessageLines);
@@ -54,7 +54,7 @@ namespace CommitLint.Net.Tests.UnitTests.ValidatorsTests
         {
             // Arrange
             var subject = new CommitMessageValidator(GetConfig());
-            string[] commitMessageLines = new[] { "feat: description", "Body" };
+            string[] commitMessageLines = ["feat: description", "Body"];
 
             // Act
             var result = subject.Validate(commitMessageLines);
@@ -68,7 +68,7 @@ namespace CommitLint.Net.Tests.UnitTests.ValidatorsTests
         {
             // Arrange
             var subject = new CommitMessageValidator(GetConfig());
-            string[] commitMessageLines = new[] { "feat: This is a valid message", "", "" };
+            string[] commitMessageLines = ["feat: This is a valid message", "", ""];
 
             // Act
             var result = subject.Validate(commitMessageLines);
@@ -82,7 +82,7 @@ namespace CommitLint.Net.Tests.UnitTests.ValidatorsTests
         {
             // Arrange
             var subject = new CommitMessageValidator(GetConfig());
-            string[] commitMessageLines = new[] { "invalid_type: description" };
+            string[] commitMessageLines = ["invalid_type: description"];
 
             // Act
             var result = subject.Validate(commitMessageLines);
@@ -96,7 +96,7 @@ namespace CommitLint.Net.Tests.UnitTests.ValidatorsTests
         {
             // Arrange
             var subject = new CommitMessageValidator(GetConfig());
-            string[] commitMessageLines = new[] { "feat(invalid scope): description" };
+            string[] commitMessageLines = ["feat(invalid scope): description"];
 
             // Act
             var result = subject.Validate(commitMessageLines);
@@ -110,7 +110,7 @@ namespace CommitLint.Net.Tests.UnitTests.ValidatorsTests
         {
             // Arrange
             var subject = new CommitMessageValidator(GetConfig());
-            string[] commitMessageLines = new[] { "feat!(scope): description" };
+            string[] commitMessageLines = ["feat!(scope): description"];
 
             // Act
             var result = subject.Validate(commitMessageLines);
@@ -124,12 +124,12 @@ namespace CommitLint.Net.Tests.UnitTests.ValidatorsTests
         {
             // Arrange
             var subject = new CommitMessageValidator(GetConfig());
-            string[] commitMessageLines = new[]
-            {
+            string[] commitMessageLines =
+            [
                 "feat: description",
                 "",
                 "breaking change: some breaking change",
-            };
+            ];
 
             // Act
             var result = subject.Validate(commitMessageLines);
@@ -143,13 +143,13 @@ namespace CommitLint.Net.Tests.UnitTests.ValidatorsTests
         {
             // Arrange
             var subject = new CommitMessageValidator(GetConfig());
-            string[] commitMessageLines = new[]
-            {
+            string[] commitMessageLines =
+            [
                 "feat: description",
                 "",
                 "body of valid commit message",
                 "footer: without colon",
-            };
+            ];
 
             // Act
             var result = subject.Validate(commitMessageLines);
@@ -163,7 +163,7 @@ namespace CommitLint.Net.Tests.UnitTests.ValidatorsTests
         {
             // Arrange
             var subject = new CommitMessageValidator(GetConfig());
-            string[] commitMessageLines = new[] { "feat: description", "", "empty-footer: " };
+            string[] commitMessageLines = ["feat: description", "", "empty-footer: "];
 
             // Act
             var result = subject.Validate(commitMessageLines);
@@ -184,59 +184,48 @@ namespace CommitLint.Net.Tests.UnitTests.ValidatorsTests
                 ConventionalCommit = new ConventionalCommitConfig
                 {
                     Enabled = true,
-                    Types = new List<string> { "feat", "fix", "docs" },
+                    Types = ["feat", "fix", "docs"],
                 },
             };
         }
 
         private static IEnumerable<string[]> ValidCommitMessages()
         {
-            yield return new[] { "feat: valid commit message" };
-            yield return new[] { "fix: valid fix commit message" };
-            yield return new[] { "docs: readme update", "", "body of valid commit message" };
-            yield return new[] { "feat(scope): some update" };
-            yield return new[] { "feat(scope)!: some update" };
-            yield return new[] { "feat!: some update" };
-            yield return new[]
-            {
+            yield return ["feat: valid commit message"];
+            yield return ["fix: valid fix commit message"];
+            yield return ["docs: readme update", "", "body of valid commit message"];
+            yield return ["feat(scope): some update"];
+            yield return ["feat(scope)!: some update"];
+            yield return ["feat!: some update"];
+            yield return
+            [
                 "docs: readme update",
                 "",
                 "body of valid commit message",
                 "",
                 "BREAKING CHANGE: some breaking change",
-            };
-            yield return new[]
-            {
-                "docs: readme update",
-                "",
-                "BREAKING-CHANGE: other breaking change",
-            };
-            yield return new[]
-            {
+            ];
+            yield return ["docs: readme update", "", "BREAKING-CHANGE: other breaking change"];
+            yield return
+            [
                 "docs: readme update",
                 "",
                 "body of valid commit message",
                 "",
                 "Footer: some info",
-            };
-            yield return new[] { "docs: readme update", "", "Closes #124" };
-            yield return new[]
-            {
+            ];
+            yield return ["docs: readme update", "", "Closes #124"];
+            yield return
+            [
                 "feat: description",
                 "",
                 "body of valid commit message",
                 "",
                 "Closes #124",
-            };
-            yield return new[]
-            {
-                "feat: description",
-                "",
-                "Footer1: some info",
-                "Footer2: some info",
-            };
-            yield return new[]
-            {
+            ];
+            yield return ["feat: description", "", "Footer1: some info", "Footer2: some info"];
+            yield return
+            [
                 "feat: description",
                 "",
                 "body of valid commit message",
@@ -244,7 +233,7 @@ namespace CommitLint.Net.Tests.UnitTests.ValidatorsTests
                 "Signed-off-by: Author <author@example.com>",
                 "",
                 "Co-authored-by: Contributor <contributor@example.com>",
-            };
+            ];
         }
     }
 }

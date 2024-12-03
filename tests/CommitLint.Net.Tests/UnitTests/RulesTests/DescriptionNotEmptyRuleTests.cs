@@ -12,7 +12,7 @@ public class DescriptionNotEmptyRuleTests
         // Arrange
         var config = new ConventionalCommitConfig { Enabled = true };
         var rule = new DescriptionNotEmptyRule(config);
-        string[] commitMessageLines = new[] { "feat: " };
+        string[] commitMessageLines = ["feat: "];
 
         // Act
         var result = rule.IsValid(commitMessageLines);
@@ -28,7 +28,7 @@ public class DescriptionNotEmptyRuleTests
         // Arrange
         var config = new ConventionalCommitConfig { Enabled = false };
         var rule = new DescriptionNotEmptyRule(config);
-        string[] commitMessageLines = new[] { "feat: " };
+        string[] commitMessageLines = ["feat: "];
 
         // Act
         var result = rule.IsValid(commitMessageLines);

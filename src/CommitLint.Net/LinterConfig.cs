@@ -1,6 +1,5 @@
 using System.IO.Abstractions;
 using System.Text.Json;
-using CommitLint.Net.JsonNamingPolicies;
 using CommitLint.Net.Models;
 
 namespace CommitLint.Net;
@@ -24,10 +23,9 @@ public sealed class LinterConfig
         var commitMessageConfigContent = fileSystem.File.ReadAllText(
             commitMessageConfigFile.FullName
         );
-
         var commitMessageConfigRoot = JsonSerializer.Deserialize<CommitMessageConfigRoot>(
             commitMessageConfigContent,
-            new JsonSerializerOptions { PropertyNamingPolicy = new KebabCaseLowerNamingPolicy() }
+            new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.KebabCaseLower }
         );
         CommitMessageConfig = commitMessageConfigRoot?.Config;
     }

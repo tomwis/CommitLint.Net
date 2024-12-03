@@ -1,6 +1,5 @@
 using System.IO.Abstractions.TestingHelpers;
 using System.Text.Json;
-using CommitLint.Net.JsonNamingPolicies;
 using CommitLint.Net.Models;
 using FluentAssertions;
 
@@ -72,8 +71,8 @@ public class LinterTests
                 ConventionalCommit = new ConventionalCommitConfig
                 {
                     Enabled = true,
-                    Types = new List<string>
-                    {
+                    Types =
+                    [
                         "feat",
                         "fix",
                         "refactor",
@@ -84,7 +83,7 @@ public class LinterTests
                         "docs",
                         "perf",
                         "revert",
-                    },
+                    ],
                 },
             },
         };
@@ -94,10 +93,7 @@ public class LinterTests
             commitMessageConfigFileName,
             JsonSerializer.Serialize(
                 config,
-                new JsonSerializerOptions
-                {
-                    PropertyNamingPolicy = new KebabCaseLowerNamingPolicy(),
-                }
+                new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.KebabCaseLower }
             )
         );
         return commitMessageConfigFileName;

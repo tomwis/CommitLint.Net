@@ -12,7 +12,7 @@ public class BodyNotEmptyRuleTests
         // Arrange
         var config = new ConventionalCommitConfig { Enabled = true };
         var rule = new BodyNotEmptyRule(config);
-        string[] commitMessageLines = new[] { "fix: update feature", "", "" };
+        string[] commitMessageLines = ["fix: update feature", "", ""];
 
         // Act
         var result = rule.IsValid(commitMessageLines);
@@ -28,7 +28,7 @@ public class BodyNotEmptyRuleTests
         // Arrange
         var config = new ConventionalCommitConfig { Enabled = false };
         var rule = new BodyNotEmptyRule(config);
-        string[] commitMessageLines = new[] { "fix: update feature", "", "" };
+        string[] commitMessageLines = ["fix: update feature", "", ""];
 
         // Act
         var result = rule.IsValid(commitMessageLines);

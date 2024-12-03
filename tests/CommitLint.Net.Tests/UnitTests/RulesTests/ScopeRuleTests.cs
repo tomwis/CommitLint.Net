@@ -18,7 +18,7 @@ public class ScopeRuleTests
         var rule = new ScopeRule(config);
 
         // Act
-        var result = rule.IsValid(new[] { commitMessage });
+        var result = rule.IsValid([commitMessage]);
 
         // Assert
         result.IsValid.Should().BeTrue();
@@ -30,7 +30,7 @@ public class ScopeRuleTests
         // Arrange
         var config = new ConventionalCommitConfig { Enabled = true };
         var rule = new ScopeRule(config);
-        string[] commitMessageLines = new[] { "feat: description" };
+        string[] commitMessageLines = ["feat: description"];
 
         // Act
         var result = rule.IsValid(commitMessageLines);
@@ -51,7 +51,7 @@ public class ScopeRuleTests
         // Arrange
         var config = new ConventionalCommitConfig { Enabled = true };
         var rule = new ScopeRule(config);
-        string[] commitMessageLines = new[] { commitMessage };
+        string[] commitMessageLines = [commitMessage];
 
         // Act
         var result = rule.IsValid(commitMessageLines);
@@ -67,7 +67,7 @@ public class ScopeRuleTests
         // Arrange
         var config = new ConventionalCommitConfig { Enabled = true };
         var rule = new ScopeRule(config);
-        string[] commitMessageLines = new[] { "feat(): description" };
+        string[] commitMessageLines = ["feat(): description"];
 
         // Act
         var result = rule.IsValid(commitMessageLines);
@@ -83,7 +83,7 @@ public class ScopeRuleTests
         // Arrange
         var config = new ConventionalCommitConfig { Enabled = true };
         var rule = new ScopeRule(config);
-        string[] commitMessageLines = new[] { "feat(   ): description" };
+        string[] commitMessageLines = ["feat(   ): description"];
 
         // Act
         var result = rule.IsValid(commitMessageLines);
@@ -99,7 +99,7 @@ public class ScopeRuleTests
         // Arrange
         var config = new ConventionalCommitConfig { Enabled = true };
         var rule = new ScopeRule(config);
-        string[] commitMessageLines = new[] { "feat(scope)!: description" };
+        string[] commitMessageLines = ["feat(scope)!: description"];
 
         // Act
         var result = rule.IsValid(commitMessageLines);

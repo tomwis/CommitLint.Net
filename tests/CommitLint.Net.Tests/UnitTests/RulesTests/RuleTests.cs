@@ -13,7 +13,7 @@ public class RuleTests
         var rule = new MockRule(config);
 
         // Act
-        var result = rule.IsValid(Array.Empty<string>());
+        var result = rule.IsValid([]);
 
         // Assert
         result.IsValid.Should().BeTrue();
@@ -27,7 +27,7 @@ public class RuleTests
         var rule = new MockRule(config, isEnabled: false);
 
         // Act
-        var result = rule.IsValid(Array.Empty<string>());
+        var result = rule.IsValid([]);
 
         // Assert
         result.IsValid.Should().BeTrue();
@@ -41,24 +41,16 @@ public class RuleTests
         var rule = new MockRule(config, isEnabled: true);
 
         // Act
-        _ = rule.IsValid(Array.Empty<string>());
+        _ = rule.IsValid([]);
 
         // Assert
         rule.IsValidInternalCalled.Should().BeTrue();
     }
 
-    private class MockRule : Rule<string>
+    private class MockRule(string? config, bool isEnabled = false) : Rule<string>(config)
     {
         private bool _isValidInternalCalled;
-        private readonly bool _isEnabled;
-
-        public MockRule(string? config, bool isEnabled = false)
-            : base(config)
-        {
-            _isEnabled = isEnabled;
-        }
-
-        public override bool IsEnabled => _isEnabled;
+        public override bool IsEnabled => isEnabled;
 
         protected override RuleValidationResult IsValidInternal(string[] commitMessageLines)
         {

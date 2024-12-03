@@ -3,11 +3,9 @@ using CommitLint.Net.Rules.Models;
 
 namespace CommitLint.Net.Rules;
 
-public sealed class TypeRule : Rule<ConventionalCommitConfig>
+public sealed class TypeRule(ConventionalCommitConfig? config)
+    : Rule<ConventionalCommitConfig>(config)
 {
-    public TypeRule(ConventionalCommitConfig? config)
-        : base(config) { }
-
     public override bool IsEnabled => Config?.Enabled ?? false;
 
     protected override RuleValidationResult IsValidInternal(string[] commitMessageLines)

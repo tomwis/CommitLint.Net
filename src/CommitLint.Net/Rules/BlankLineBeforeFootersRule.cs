@@ -4,11 +4,9 @@ using CommitLint.Net.Rules.Models;
 
 namespace CommitLint.Net.Rules;
 
-public partial class BlankLineBeforeFootersRule : Rule<ConventionalCommitConfig>
+public partial class BlankLineBeforeFootersRule(ConventionalCommitConfig? config)
+    : Rule<ConventionalCommitConfig>(config)
 {
-    public BlankLineBeforeFootersRule(ConventionalCommitConfig? config)
-        : base(config) { }
-
     public override bool IsEnabled => Config?.Enabled ?? false;
 
     private static readonly Regex FooterPattern = FooterTokenWithSeparatorRegex();

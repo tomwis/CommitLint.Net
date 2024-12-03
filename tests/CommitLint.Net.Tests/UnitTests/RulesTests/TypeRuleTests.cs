@@ -15,7 +15,7 @@ public class TypeRuleTests
         var config = new ConventionalCommitConfig
         {
             Enabled = true,
-            Types = new List<string> { "feat", "fix", "refactor" },
+            Types = ["feat", "fix", "refactor"],
         };
         var rule = new TypeRule(config);
         var commitMessageLines = new[] { $"{type}: description" };
@@ -38,10 +38,10 @@ public class TypeRuleTests
         var config = new ConventionalCommitConfig
         {
             Enabled = true,
-            Types = new List<string> { "feat", "fix", "refactor" },
+            Types = ["feat", "fix", "refactor"],
         };
         var rule = new TypeRule(config);
-        string[] commitMessageLines = new[] { $"{type}: description" };
+        string[] commitMessageLines = [$"{type}: description"];
 
         // Act
         var result = rule.IsValid(commitMessageLines);
@@ -62,10 +62,10 @@ public class TypeRuleTests
         var config = new ConventionalCommitConfig
         {
             Enabled = false,
-            Types = new List<string> { "feat", "fix", "refactor" },
+            Types = ["feat", "fix", "refactor"],
         };
         var rule = new TypeRule(config);
-        string[] commitMessageLines = new[] { $"{type}: description" };
+        string[] commitMessageLines = [$"{type}: description"];
 
         // Act
         var result = rule.IsValid(commitMessageLines);
@@ -84,10 +84,10 @@ public class TypeRuleTests
         var config = new ConventionalCommitConfig
         {
             Enabled = true,
-            Types = new List<string> { "feat", "fix", "refactor" },
+            Types = ["feat", "fix", "refactor"],
         };
         var rule = new TypeRule(config);
-        string[] commitMessageLines = new[] { $"feat{separator}description" };
+        string[] commitMessageLines = [$"feat{separator}description"];
 
         // Act
         var result = rule.IsValid(commitMessageLines);
@@ -107,10 +107,10 @@ public class TypeRuleTests
         var config = new ConventionalCommitConfig
         {
             Enabled = false,
-            Types = new List<string> { "feat", "fix", "refactor" },
+            Types = ["feat", "fix", "refactor"],
         };
         var rule = new TypeRule(config);
-        string[] commitMessageLines = new[] { $"feat{separator}description" };
+        string[] commitMessageLines = [$"feat{separator}description"];
 
         // Act
         var result = rule.IsValid(commitMessageLines);
@@ -125,7 +125,7 @@ public class TypeRuleTests
         // Arrange
         var config = new ConventionalCommitConfig { Enabled = true, Types = null };
         var rule = new TypeRule(config);
-        string[] commitMessageLines = new[] { "feat: description" };
+        string[] commitMessageLines = ["feat: description"];
 
         // Act
         var result = rule.IsValid(commitMessageLines);
@@ -138,13 +138,9 @@ public class TypeRuleTests
     public void WhenAllowedTypesAreEmpty_AndRuleIsEnabled_ThenRuleIsNotValid()
     {
         // Arrange
-        var config = new ConventionalCommitConfig
-        {
-            Enabled = true,
-            Types = new List<string> { },
-        };
+        var config = new ConventionalCommitConfig { Enabled = true, Types = [] };
         var rule = new TypeRule(config);
-        string[] commitMessageLines = new[] { "feat: description" };
+        string[] commitMessageLines = ["feat: description"];
 
         // Act
         var result = rule.IsValid(commitMessageLines);
@@ -160,10 +156,10 @@ public class TypeRuleTests
         var config = new ConventionalCommitConfig
         {
             Enabled = true,
-            Types = new List<string> { "feat", "fix", "refactor" },
+            Types = ["feat", "fix", "refactor"],
         };
         var rule = new TypeRule(config);
-        string[] commitMessageLines = new[] { "feat!: description" };
+        string[] commitMessageLines = ["feat!: description"];
 
         // Act
         var result = rule.IsValid(commitMessageLines);

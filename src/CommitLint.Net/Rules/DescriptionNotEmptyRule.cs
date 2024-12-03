@@ -3,11 +3,9 @@ using CommitLint.Net.Rules.Models;
 
 namespace CommitLint.Net.Rules;
 
-public sealed class DescriptionNotEmptyRule : Rule<ConventionalCommitConfig>
+public sealed class DescriptionNotEmptyRule(ConventionalCommitConfig? config)
+    : Rule<ConventionalCommitConfig>(config)
 {
-    public DescriptionNotEmptyRule(ConventionalCommitConfig? config)
-        : base(config) { }
-
     public override bool IsEnabled => Config?.Enabled ?? false;
 
     protected override RuleValidationResult IsValidInternal(string[] commitMessageLines)

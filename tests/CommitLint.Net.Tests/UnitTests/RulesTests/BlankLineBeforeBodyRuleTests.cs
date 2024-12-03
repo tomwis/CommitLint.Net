@@ -12,7 +12,7 @@ public class BlankLineBeforeBodyRuleTests
         // Arrange
         var config = new ConventionalCommitConfig { Enabled = true };
         var rule = new BlankLineBeforeBodyRule(config);
-        string[] commitMessage = new[] { "feat: description", "Body" };
+        string[] commitMessage = ["feat: description", "Body"];
 
         // Act
         var result = rule.IsValid(commitMessage);
@@ -28,7 +28,7 @@ public class BlankLineBeforeBodyRuleTests
         // Arrange
         var config = new ConventionalCommitConfig { Enabled = false };
         var rule = new BlankLineBeforeBodyRule(config);
-        string[] commitMessage = new[] { "feat: description", "Body" };
+        string[] commitMessage = ["feat: description", "Body"];
 
         // Act
         var result = rule.IsValid(commitMessage);
