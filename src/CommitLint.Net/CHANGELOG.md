@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [versionize](https://github.com/versionize/versionize) for commit guidelines.
 
+<a name="0.5.0"></a>
+## [0.5.0](https://www.github.com/tomwis/CommitLint.Net/releases/tag/v0.5.0) (2024-12-03)
+
+### Features
+
+* added .Net 7.0 support ([80f48f9](https://www.github.com/tomwis/CommitLint.Net/commit/80f48f9ac4002cc2fe04670113dc2c53a1775c3d))
+
 <a name="0.4.0"></a>
 ## [0.4.0](https://www.github.com/tomwis/CommitLint.Net/releases/tag/v0.4.0) (2024-12-02)
 
