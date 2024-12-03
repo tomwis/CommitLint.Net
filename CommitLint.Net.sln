@@ -46,5 +46,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionSettings", "Solutio
 		Directory.Packages.props = Directory.Packages.props
 		task-runner.json = .husky/task-runner.json
 		config\commit-message-config.json = config\commit-message-config.json
+		Directory.Build.props = Directory.Build.props
 	EndProjectSection
 EndProject
