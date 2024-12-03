@@ -84,3 +84,22 @@ If you'd like to use it directly, without Husky:
 ```
 dotnet commit-lint --commit-file "path/to/commit-message.txt" --commit-message-config-file "path/to/commit-message-config.json"
 ```
+
+
+# Current Rules
+
+1. Max subject length check
+2. Scope format check
+3. Type format check + if it is on allowed list
+4. Description not empty check
+5. Blank line before body check
+6. Body not empty check
+7. Blank line before footers check
+8. Optional "!" character after type/scope for breaking change check
+9. Breaking change token in footer format check
+10. Footers content not empty check
+
+Rules 2 - 10 are
+from [Conventional Commits specification](https://www.conventionalcommits.org/en/v1.0.0/#specification). Rule 1 is an additional one.
+
+Rule 1 can be disabled in config and rules 2 - 10 can be disabled in config as well, but all together, not one by one.
