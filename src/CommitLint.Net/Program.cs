@@ -12,15 +12,28 @@ public class Program
             .Default.ParseArguments<Options>(args)
             .WithParsed(o =>
             {
-                var configFileName = o.CommitMessageConfigFileName;
-                if (string.IsNullOrWhiteSpace(configFileName))
+                try
                 {
-                    Console.WriteLine("No config file provided. Using default config.");
-                    configFileName = GetDefaultConfig();
-                }
+                    var configFileName = o.CommitMessageConfigFileName;
+                    if (string.IsNullOrWhiteSpace(configFileName))
+                    {
+                        Console.WriteLine("No config file provided. Using default config.");
+                        configFileName = GetDefaultConfig();
+                    }
 
-                var linterConfig = new LinterConfig(o.CommitMessageFileName, configFileName);
-                new Linter().Run(linterConfig);
+                    var linterConfig = new LinterConfig(o.CommitMessageFileName, configFileName);
+                    var linter = new Linter();
+                    linter.Run(linterConfig);
+                }
+                catch (CommitFormatException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    exitCode = 1;
+                }
+                catch (Exception)
+                {
+                    exitCode = 1;
+                }
             })
             .WithNotParsed(errors =>
             {
