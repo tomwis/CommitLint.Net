@@ -9,6 +9,9 @@
     <Version>0.5.1</Version>
     <PackageId>CommitLint.Net</PackageId>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageProjectUrl>https://github.com/tomwis/CommitLint.Net</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/tomwis/CommitLint.Net</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="CommandLineParser" />
