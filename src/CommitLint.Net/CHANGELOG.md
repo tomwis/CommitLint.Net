@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [versionize](https://github.com/versionize/versionize) for commit guidelines.
 
+<a name="0.5.3"></a>
+## [0.5.3](https://www.github.com/tomwis/CommitLint.Net/releases/tag/v0.5.3) (2024-12-14)
+
+### Bug Fixes
+
+* handle exceptions in Program.Main to prevent printing StackTrace to console ([7b6ae99](https://www.github.com/tomwis/CommitLint.Net/commit/7b6ae99cf398f8549abe2858c84d3fc79af163c3))
+
 <a name="0.5.2"></a>
 ## [0.5.2](https://www.github.com/tomwis/CommitLint.Net/releases/tag/v0.5.2) (2024-12-14)
 
