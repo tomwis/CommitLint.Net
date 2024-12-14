@@ -24,7 +24,7 @@
       "rollForward": false
     },
     "commitlint.net": {
-      "version": "0.3.0",
+      "version": "0.5.3",
       "commands": [
         "commit-lint"
       ],
