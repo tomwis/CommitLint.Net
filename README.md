@@ -5,22 +5,36 @@ It is a dotnet tool for validating commit messages according to [Conventional Co
 ## How to use
 
 ### Install
-```
+```shell
 dotnet new tool-manifest # if this is your first local dotnet tool in this project
 dotnet tool install CommitLint.Net
 ```
 
 ### Configure Husky.NET
 
-Install & configure Husky.NET:
-```
-dotnet tool install Husky.Net
+Install & configure Husky.NET (there is slight difference between platform in parsing $1 argument):
+
+#### MacOS
+```shell
+dotnet tool install Husky
 dotnet husky install
 dotnet husky add commit-msg -c "dotnet husky run --group commit-msg --args \"\$1\""
 ```
 
-Then in `.husky/task-runner.json` add task to run linter:
+#### Windows
+```shell
+dotnet tool install Husky
+dotnet husky install
+dotnet husky add commit-msg -c 'dotnet husky run --group commit-msg --args """$1"""'
 ```
+
+In the end, entry in `commit-msg` file that will be created by `dotnet husky add` should be:
+```shell
+dotnet husky run --group commit-msg --args "$1"
+```
+
+Then in `.husky/task-runner.json` add task to run linter:
+```json
 {
   "$schema": "https://alirezanet.github.io/Husky.Net/schema.json",
   "tasks": [
@@ -42,7 +56,7 @@ Then in `.husky/task-runner.json` add task to run linter:
 ### Custom config
 
 CommitLint.Net uses default configuration which is the following:
-```
+```json
 {
     "config": {
         "max-subject-length": {
@@ -61,7 +75,7 @@ If you want to change it, create json file, e.g. `commit-message-config.json` wi
 
 If you're using Husky, then you'll also need to add this custom config to `task-runner.json` with `--commit-message-config-file` option:
 
-```
+```json
 {
   "name": "commit-message-linter",
   "group": "commit-msg",
@@ -81,7 +95,7 @@ If you're using Husky, then you'll also need to add this custom config to `task-
 ### Direct usage
 
 If you'd like to use it directly, without Husky:
-```
+```shell
 dotnet commit-lint --commit-file "path/to/commit-message.txt" --commit-message-config-file "path/to/commit-message-config.json"
 ```
 
