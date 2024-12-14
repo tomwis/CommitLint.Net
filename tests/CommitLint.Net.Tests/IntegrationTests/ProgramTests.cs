@@ -1,3 +1,4 @@
+using System.Text;
 using FluentAssertions;
 
 namespace CommitLint.Net.Tests.IntegrationTests;
@@ -25,7 +26,7 @@ public class ProgramTests
     }
 
     [Test]
-    public void WhenMainIsCalledWithInvalidCommitMessage_ThenThrowCommitFormatException()
+    public void WhenMainIsCalledWithInvalidCommitMessage_ThenReturnOne()
     {
         // Arrange
         string[] args =
@@ -37,14 +38,14 @@ public class ProgramTests
         ];
 
         // Act
-        var action = () => Program.Main(args);
+        var result = Program.Main(args);
 
         // Assert
-        action.Should().Throw<CommitFormatException>();
+        result.Should().Be(1);
     }
 
     [Test]
-    public void WhenMainIsCalledWithInvalidConfigFile_ThenThrowFileNotFoundException()
+    public void WhenMainIsCalledWithInvalidConfigFile_ThenReturnOne()
     {
         // Arrange
         string[] args =
@@ -56,10 +57,10 @@ public class ProgramTests
         ];
 
         // Act
-        var action = () => Program.Main(args);
+        var result = Program.Main(args);
 
         // Assert
-        action.Should().Throw<FileNotFoundException>();
+        result.Should().Be(1);
     }
 
     [Test]
@@ -73,5 +74,95 @@ public class ProgramTests
 
         // Assert
         result.Should().Be(0);
+    }
+
+    [Test]
+    public void WhenLinterThrowsCommitFormatException_ThenMainReturnsOne()
+    {
+        // Arrange
+        string[] args = ["--commit-file", "IntegrationTests/Data/sampleInvalidCommit.txt"];
+
+        // Act
+        var result = Program.Main(args);
+
+        // Assert
+        result.Should().Be(1);
+    }
+
+    [Test]
+    public void WhenLinterThrowsAnyOtherExceptionThanCommitFormatException_ThenMainReturnsOne()
+    {
+        // Arrange
+        string[] args = ["--commit-file", "IntegrationTests/Data/nonExistingCommit.txt"];
+
+        // Act
+        var result = Program.Main(args);
+
+        // Assert
+        result.Should().Be(1);
+    }
+
+    [Test]
+    public void WhenLinterThrowsCommitFormatException_ThenPrintExceptionMessage()
+    {
+        // Arrange
+        const string expectedMessage = "Commit message is in invalid format. Error: ";
+        var stringBuilder = new StringBuilder();
+        Console.SetOut(new StringWriter(stringBuilder));
+        string[] args = ["--commit-file", "IntegrationTests/Data/sampleInvalidCommit.txt"];
+
+        // Act
+        _ = Program.Main(args);
+
+        // Assert
+        stringBuilder
+            .ToString()
+            .TrimEnd()
+            .Split(Environment.NewLine)
+            .Last()
+            .Should()
+            .StartWith(expectedMessage);
+    }
+
+    [Test]
+    public void WhenLinterThrowsCommitFormatException_ThenDoNotPrintExceptionStackTrace()
+    {
+        // Arrange
+        var stringBuilder = new StringBuilder();
+        Console.SetOut(new StringWriter(stringBuilder));
+        string[] args = ["--commit-file", "IntegrationTests/Data/sampleInvalidCommit.txt"];
+
+        // Act
+        _ = Program.Main(args);
+
+        // Assert
+        stringBuilder
+            .ToString()
+            .ToLower()
+            .Should()
+            .NotContain("exception")
+            .And.NotContain("   at ")
+            .And.NotContain(":line ");
+    }
+
+    [Test]
+    public void WhenLinterThrowsAnyOtherExceptionThanCommitFormatException_ThenDoNotPrintExceptionStackTrace()
+    {
+        // Arrange
+        var stringBuilder = new StringBuilder();
+        Console.SetOut(new StringWriter(stringBuilder));
+        string[] args = ["--commit-file", "IntegrationTests/Data/nonExistingCommit.txt"];
+
+        // Act
+        _ = Program.Main(args);
+
+        // Assert
+        stringBuilder
+            .ToString()
+            .ToLower()
+            .Should()
+            .NotContain("exception")
+            .And.NotContain("   at ")
+            .And.NotContain(":line ");
     }
 }
