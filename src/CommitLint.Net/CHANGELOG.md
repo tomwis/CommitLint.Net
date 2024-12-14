@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [versionize](https://github.com/versionize/versionize) for commit guidelines.
 
+<a name="0.5.2"></a>
+## [0.5.2](https://www.github.com/tomwis/CommitLint.Net/releases/tag/v0.5.2) (2024-12-14)
+
+### Changes
+* updated README for Windows Husky.NET setup ([67173aed](https://www.github.com/tomwis/CommitLint.Net/commit/67173aed))
+* added project and repository metadata to csproj for NuGet ([52883574](https://www.github.com/tomwis/CommitLint.Net/commit/52883574))
+
 <a name="0.5.1"></a>
 ## [0.5.1](https://www.github.com/tomwis/CommitLint.Net/releases/tag/v0.5.1) (2024-12-03)
 

@@ -6,7 +6,7 @@
     <PackAsTool>true</PackAsTool>
     <ToolCommandName>commit-lint</ToolCommandName>
     <PackageOutputPath>./nupkg</PackageOutputPath>
-    <Version>0.5.1</Version>
+    <Version>0.5.2</Version>
     <PackageId>CommitLint.Net</PackageId>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageProjectUrl>https://github.com/tomwis/CommitLint.Net</PackageProjectUrl>
