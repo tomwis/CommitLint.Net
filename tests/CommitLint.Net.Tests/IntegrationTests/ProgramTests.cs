@@ -1,4 +1,5 @@
 using System.Text;
+using CommitLint.Net.Logging;
 using FluentAssertions;
 
 namespace CommitLint.Net.Tests.IntegrationTests;
@@ -178,5 +179,45 @@ public class ProgramTests
             .NotContain("exception")
             .And.NotContain("   at ")
             .And.NotContain(":line ");
+    }
+
+    [Test]
+    public void WhenMainIsCalledWithVerbosityOption_ThenLogLevelIsUpdated(
+        [Values] Log.LogLevel logLevel
+    )
+    {
+        // Arrange
+        string[] args =
+        [
+            "--commit-file",
+            "IntegrationTests/Data/sampleCommit.txt",
+            "--verbosity",
+            logLevel.ToString().ToLower(),
+        ];
+
+        // Act
+        _ = Program.Main(args);
+
+        // Assert
+        Log.MinLogLevel.Should().Be(logLevel);
+    }
+
+    [Test]
+    public void WhenMainIsCalledWithUnsupportedVerbosity_ThenReturnOne()
+    {
+        // Arrange
+        string[] args =
+        [
+            "--commit-file",
+            "IntegrationTests/Data/sampleCommit.txt",
+            "--verbosity",
+            "wrong-verbosity",
+        ];
+
+        // Act
+        var result = Program.Main(args);
+
+        // Assert
+        result.Should().Be(1);
     }
 }

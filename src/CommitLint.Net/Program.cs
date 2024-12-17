@@ -15,6 +15,12 @@ public class Program
             {
                 try
                 {
+                    exitCode = SetupLogLevel(o);
+                    if (exitCode == 1)
+                    {
+                        return;
+                    }
+
                     var configFileName = o.CommitMessageConfigFileName;
                     if (string.IsNullOrWhiteSpace(configFileName))
                     {
@@ -41,6 +47,32 @@ public class Program
             {
                 exitCode = 1;
             });
+
+        return exitCode;
+    }
+
+    private static int SetupLogLevel(Options o)
+    {
+        var exitCode = 0;
+        if (o.Verbosity is null)
+            return exitCode;
+
+        if (Enum.TryParse(typeof(Log.LogLevel), o.Verbosity, true, out var result))
+        {
+            Log.MinLogLevel = (Log.LogLevel)result;
+        }
+        else
+        {
+            exitCode = 1;
+            var helpText = typeof(Options)
+                .GetProperty(nameof(Options.Verbosity))
+                ?.GetCustomAttributes(typeof(OptionAttribute), false)
+                .OfType<OptionAttribute>()
+                .FirstOrDefault()
+                ?.HelpText;
+
+            Log.Error($"Verbosity option was used with unsupported value. Usage: {helpText}");
+        }
 
         return exitCode;
     }
