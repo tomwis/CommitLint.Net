@@ -1,4 +1,5 @@
 using CommandLine;
+using CommitLint.Net.Logging;
 
 namespace CommitLint.Net;
 
@@ -17,7 +18,7 @@ public class Program
                     var configFileName = o.CommitMessageConfigFileName;
                     if (string.IsNullOrWhiteSpace(configFileName))
                     {
-                        Console.WriteLine("No config file provided. Using default config.");
+                        Log.Info("No config file provided. Using default config.");
                         configFileName = GetDefaultConfig();
                     }
 
@@ -27,11 +28,12 @@ public class Program
                 }
                 catch (CommitFormatException ex)
                 {
-                    Console.WriteLine(ex.Message);
+                    Log.Error(ex.Message);
                     exitCode = 1;
                 }
                 catch (Exception)
                 {
+                    Log.Error("Unknown error.");
                     exitCode = 1;
                 }
             })
