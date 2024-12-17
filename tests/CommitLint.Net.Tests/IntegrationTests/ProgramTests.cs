@@ -6,6 +6,20 @@ namespace CommitLint.Net.Tests.IntegrationTests;
 [TestFixture]
 public class ProgramTests
 {
+    private TextWriter _originalConsoleOut;
+
+    [SetUp]
+    public void SetUp()
+    {
+        _originalConsoleOut = Console.Out;
+    }
+
+    [TearDown]
+    public void TearDown()
+    {
+        Console.SetOut(_originalConsoleOut);
+    }
+
     [Test]
     public void WhenMainIsCalledWithValidArguments_ThenReturnZero()
     {
