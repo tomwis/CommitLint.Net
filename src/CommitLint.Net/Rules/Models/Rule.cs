@@ -1,3 +1,5 @@
+using CommitLint.Net.Logging;
+
 namespace CommitLint.Net.Rules.Models;
 
 public abstract class Rule<T>(T? config) : IRule
@@ -14,36 +16,31 @@ public abstract class Rule<T>(T? config) : IRule
         LogStart();
         if (Config is null)
         {
-            Log("Configuration value not found. Not validating.");
+            Log.Info("\tConfiguration value not found. Not validating.");
             return RuleValidationResult.ConfigNull();
         }
 
         if (!IsEnabled)
         {
-            Log("Check disabled");
+            Log.Info("\tCheck disabled");
             return RuleValidationResult.Disabled();
         }
 
-        Log("Check enabled");
+        Log.Verbose("\tCheck enabled");
         var result = IsValidInternal(commitMessageLines);
         var message = result.IsValid ? $"Check passed {Checkmark}" : $"Check failed {Cross}";
         if (!string.IsNullOrEmpty(result.Message))
         {
             message += $" - {result.Message}";
         }
-        Log(message);
+        Log.Info($"\t{message}");
         return result;
     }
 
     protected abstract RuleValidationResult IsValidInternal(string[] commitMessageLines);
 
-    private void Log(string message)
-    {
-        Console.WriteLine($"\t{message}");
-    }
-
     private void LogStart()
     {
-        Console.WriteLine($"Rule {Name}");
+        Log.Info($"Rule {Name}");
     }
 }

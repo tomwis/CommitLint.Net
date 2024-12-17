@@ -1,3 +1,4 @@
+using CommitLint.Net.Logging;
 using CommitLint.Net.Validators;
 
 namespace CommitLint.Net;
@@ -21,12 +22,12 @@ public sealed class Linter
 
     private static void PrintCommit(string[] commitMessage)
     {
-        Console.WriteLine("Commit message with line numbers:");
+        Log.Verbose("Commit message with line numbers:");
         for (int i = 0; i < commitMessage.Length; ++i)
         {
-            Console.WriteLine($"    {i}: {commitMessage[i]}");
+            Log.Verbose($"    {i}: {commitMessage[i]}");
         }
 
-        Console.WriteLine();
+        Log.Verbose(Environment.NewLine);
     }
 }
