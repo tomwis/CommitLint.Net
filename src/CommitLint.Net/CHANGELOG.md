@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [versionize](https://github.com/versionize/versionize) for commit guidelines.
 
+<a name="0.6.0"></a>
+## [0.6.0](https://www.github.com/tomwis/CommitLint.Net/releases/tag/v0.6.0) (2024-12-18)
+
+### Features
+
+* added verbosity option to control log levels ([f0a97b6](https://www.github.com/tomwis/CommitLint.Net/commit/f0a97b656b361d03a22add173bae94903b7879c7))
+
 <a name="0.5.3"></a>
 ## [0.5.3](https://www.github.com/tomwis/CommitLint.Net/releases/tag/v0.5.3) (2024-12-14)
 
