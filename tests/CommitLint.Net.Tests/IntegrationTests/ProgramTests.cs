@@ -130,13 +130,7 @@ public class ProgramTests
         _ = Program.Main(args);
 
         // Assert
-        stringBuilder
-            .ToString()
-            .TrimEnd()
-            .Split(Environment.NewLine)
-            .Last()
-            .Should()
-            .StartWith(expectedMessage);
+        stringBuilder.ToString().Should().Contain(expectedMessage);
     }
 
     [Test]

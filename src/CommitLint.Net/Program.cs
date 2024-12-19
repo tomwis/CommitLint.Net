@@ -42,6 +42,15 @@ public class Program
                     Log.Error("Unknown error.");
                     exitCode = 1;
                 }
+
+                Log.Info(
+                    """
+
+                    Useful links:
+                        - CommitLint.Net documentation: https://github.com/tomwis/CommitLint.Net
+                        - Conventional Commits official website: https://www.conventionalcommits.org
+                    """
+                );
             })
             .WithNotParsed(errors =>
             {
