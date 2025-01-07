@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [versionize](https://github.com/versionize/versionize) for commit guidelines.
 
+<a name="0.7.0"></a>
+## [0.7.0](https://www.github.com/tomwis/CommitLint.Net/releases/tag/v0.7.0) (2025-01-07)
+
+### Features
+
+* added useful links in info logs ([cf478fd](https://www.github.com/tomwis/CommitLint.Net/commit/cf478fd6db58f3a860a38fb4b79142e5509e031e))
+* added explicit rule names for improved clarity in logging ([47335147](https://www.github.com/tomwis/CommitLint.Net/commit/47335147d8ecb207bc1026962b784b9286ca5227))
+
 <a name="0.6.0"></a>
 ## [0.6.0](https://www.github.com/tomwis/CommitLint.Net/releases/tag/v0.6.0) (2024-12-18)
 
