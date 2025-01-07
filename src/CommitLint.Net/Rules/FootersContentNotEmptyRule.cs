@@ -10,6 +10,7 @@ public partial class FootersContentNotEmptyRule(ConventionalCommitConfig? config
     private const string TokenGroupName = "token";
 
     public override bool IsEnabled => Config?.Enabled ?? false;
+    public override string Name => "Footers content must not be empty";
 
     private static readonly Regex FooterPattern = FooterTokenWithSeparatorRegex();
     private static readonly Regex BreakingChangePattern = BreakingChangeTokenWithSeparatorRegex();

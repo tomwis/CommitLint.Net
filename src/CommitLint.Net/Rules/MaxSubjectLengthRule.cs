@@ -7,6 +7,7 @@ public sealed class MaxSubjectLengthRule(MaxSubjectLength? maxSubjectLength)
     : Rule<MaxSubjectLength>(maxSubjectLength)
 {
     public override bool IsEnabled => Config?.Enabled ?? false;
+    public override string Name => "Subject length must not exceed maximum";
 
     protected override RuleValidationResult IsValidInternal(string[] commitMessageLines)
     {

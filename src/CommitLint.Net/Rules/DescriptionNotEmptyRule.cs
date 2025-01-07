@@ -7,6 +7,7 @@ public sealed class DescriptionNotEmptyRule(ConventionalCommitConfig? config)
     : Rule<ConventionalCommitConfig>(config)
 {
     public override bool IsEnabled => Config?.Enabled ?? false;
+    public override string Name => "Description must not be empty";
 
     protected override RuleValidationResult IsValidInternal(string[] commitMessageLines)
     {

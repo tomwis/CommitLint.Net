@@ -7,6 +7,7 @@ public sealed class BodyNotEmptyRule(ConventionalCommitConfig? config)
     : Rule<ConventionalCommitConfig>(config)
 {
     public override bool IsEnabled => Config?.Enabled ?? false;
+    public override string Name => "Body must not be empty";
 
     protected override RuleValidationResult IsValidInternal(string[] commitMessageLines)
     {

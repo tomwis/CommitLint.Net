@@ -7,6 +7,7 @@ public sealed class TypeRule(ConventionalCommitConfig? config)
     : Rule<ConventionalCommitConfig>(config)
 {
     public override bool IsEnabled => Config?.Enabled ?? false;
+    public override string Name => "Type must be one of allowed values";
 
     protected override RuleValidationResult IsValidInternal(string[] commitMessageLines)
     {

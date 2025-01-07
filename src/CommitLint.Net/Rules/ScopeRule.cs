@@ -8,6 +8,7 @@ public sealed class ScopeRule(ConventionalCommitConfig? config)
     : Rule<ConventionalCommitConfig>(config)
 {
     public override bool IsEnabled => Config?.Enabled ?? false;
+    public override string Name => "Scope must be in valid format";
 
     private RuleValidationResult FormatFailure() =>
         RuleValidationResult.Failure(

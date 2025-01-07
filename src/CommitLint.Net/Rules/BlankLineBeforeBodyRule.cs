@@ -7,6 +7,7 @@ public sealed class BlankLineBeforeBodyRule(ConventionalCommitConfig? config)
     : Rule<ConventionalCommitConfig>(config)
 {
     public override bool IsEnabled => Config?.Enabled ?? false;
+    public override string Name => "Blank line must exist before body";
 
     protected override RuleValidationResult IsValidInternal(string[] commitMessageLines)
     {

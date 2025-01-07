@@ -8,6 +8,7 @@ public partial class BlankLineBeforeFootersRule(ConventionalCommitConfig? config
     : Rule<ConventionalCommitConfig>(config)
 {
     public override bool IsEnabled => Config?.Enabled ?? false;
+    public override string Name => "Blank line must exist before footers";
 
     private static readonly Regex FooterPattern = FooterTokenWithSeparatorRegex();
     private static readonly Regex BreakingChangePattern = BreakingChangeTokenWithSeparatorRegex();

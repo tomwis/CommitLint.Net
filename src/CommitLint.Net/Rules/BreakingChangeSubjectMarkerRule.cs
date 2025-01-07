@@ -7,6 +7,8 @@ public sealed class BreakingChangeSubjectMarkerRule(ConventionalCommitConfig? co
     : Rule<ConventionalCommitConfig>(config)
 {
     public override bool IsEnabled => Config?.Enabled ?? false;
+    public override string Name =>
+        "Breaking change marker (!) in subject must be in correct format";
 
     protected override RuleValidationResult IsValidInternal(string[] commitMessageLines)
     {

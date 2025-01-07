@@ -10,6 +10,7 @@ public class BreakingChangeTokenInFooterRule(ConventionalCommitConfig? config)
     private const string BreakingChangeHyphenToken = "BREAKING-CHANGE: ";
 
     public override bool IsEnabled => Config?.Enabled ?? false;
+    public override string Name => "Breaking change token in footer must be in correct format";
 
     protected override RuleValidationResult IsValidInternal(string[] commitMessageLines)
     {

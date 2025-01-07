@@ -9,11 +9,11 @@ public abstract class Rule<T>(T? config) : IRule
 
     protected T? Config { get; } = config;
     public abstract bool IsEnabled { get; }
-    public string Name => GetType().Name;
+    public abstract string Name { get; }
 
     public RuleValidationResult IsValid(string[] commitMessageLines)
     {
-        LogStart();
+        Log.Info($"Rule: {Name}");
         if (Config is null)
         {
             Log.Info("\tConfiguration value not found. Not validating.");
@@ -38,9 +38,4 @@ public abstract class Rule<T>(T? config) : IRule
     }
 
     protected abstract RuleValidationResult IsValidInternal(string[] commitMessageLines);
-
-    private void LogStart()
-    {
-        Log.Info($"Rule {Name}");
-    }
 }

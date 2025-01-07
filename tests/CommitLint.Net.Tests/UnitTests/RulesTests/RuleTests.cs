@@ -51,6 +51,7 @@ public class RuleTests
     {
         private bool _isValidInternalCalled;
         public override bool IsEnabled => isEnabled;
+        public override string Name { get; }
 
         protected override RuleValidationResult IsValidInternal(string[] commitMessageLines)
         {
