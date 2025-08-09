@@ -65,7 +65,23 @@ CommitLint.Net uses default configuration which is the following:
         },
         "conventional-commit": {
             "enabled": true,
-            "types": [ "feat", "fix", "refactor", "build", "chore", "style", "test", "docs", "perf", "revert" ]
+            "types": [ "feat", "fix", "refactor", "build", "chore", "style", "test", "docs", "perf", "revert" ],
+            "scopes": {
+                "enabled": false,
+                "global": [],
+                "per-type": {
+                    "feat": [],
+                    "fix": [],
+                    "refactor": [],
+                    "build": [],
+                    "chore": [],
+                    "style": [],
+                    "test": [],
+                    "docs": [],
+                    "perf": [],
+                    "revert": []
+                }
+            }
         }
     }
 }
@@ -91,6 +107,16 @@ If you're using Husky, then you'll also need to add this custom config to `task-
 ```
 `path/to/commit-message-config.json` is relative to root of your repo.
 
+#### Config options
+
+- Max subject length - max length of commit subject (whole first line) (default: 90 characters)
+- Commit types - list of allowed commit types
+- Commit scopes - list of allowed commit scopes. Disabled by default (any scope is allowed). Empty lists mean that any scope is allowed. When configured with some values, only those scopes are allowed.
+  - Global: list of allowed scopes for all types that are not listed in per-type config.
+  - Per-type: list of allowed scopes for each type. You can define only the types you want and leave the rest empty.
+
+
+
 
 ### Direct usage
 
@@ -112,8 +138,9 @@ dotnet commit-lint --commit-file "path/to/commit-message.txt" --commit-message-c
 8. Optional "!" character after type/scope for breaking change check
 9. Breaking change token in footer format check
 10. Footers content not empty check
+11. Allowed scopes check - you can configure allowed scopes as described in [Config options](#config-options)
 
 Rules 2 - 10 are
-from [Conventional Commits specification](https://www.conventionalcommits.org/en/v1.0.0/#specification). Rule 1 is an additional one.
+from [Conventional Commits specification](https://www.conventionalcommits.org/en/v1.0.0/#specification). Rule 1 is an additional one. Rule 11 is an addition to conventional commits.
 
 Rule 1 can be disabled in config and rules 2 - 10 can be disabled in config as well, but all together, not one by one.
