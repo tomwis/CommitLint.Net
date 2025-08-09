@@ -9,14 +9,22 @@ public sealed class Linter
     {
         PrintCommit(config.CommitMessageLines);
 
-        var commitMessageValidator = new CommitMessageValidator(config.CommitMessageConfig);
-        var result = commitMessageValidator.Validate(config.CommitMessageLines);
-
-        if (!result.IsValid)
+        var validators = new List<ValidatorBase>
         {
-            throw new CommitFormatException(
-                $"Commit message is in invalid format. Error: {result.Message}"
-            );
+            new AdditionalRulesValidator(config.CommitMessageConfig),
+            new ConventionalCommitsSpecValidator(config.CommitMessageConfig),
+            new ConventionalCommitsAdditionalValidator(config.CommitMessageConfig),
+        };
+
+        foreach (var validator in validators)
+        {
+            var result = validator.Validate(config.CommitMessageLines);
+            if (!result.IsValid)
+            {
+                throw new CommitFormatException(
+                    $"Commit message is in invalid format. Error: {result.Message}"
+                );
+            }
         }
     }
 

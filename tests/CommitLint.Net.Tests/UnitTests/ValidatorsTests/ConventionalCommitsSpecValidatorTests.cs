@@ -5,102 +5,27 @@ using FluentAssertions;
 namespace CommitLint.Net.Tests.UnitTests.ValidatorsTests
 {
     [TestFixture]
-    public class CommitMessageValidatorTests
+    public class ConventionalCommitsSpecValidatorTests
     {
         [TestCaseSource(nameof(ValidCommitMessages))]
         public void WhenCommitMessageIsValid_ThenReturnValidResult(string[] commitMessageLines)
         {
             // Arrange
-            var subject = new CommitMessageValidator(GetConfig());
+            var subject = new ConventionalCommitsSpecValidator(GetConfig());
 
             // Act
             var result = subject.Validate(commitMessageLines);
 
             // Assert
             result.IsValid.Should().BeTrue();
-        }
-
-        [TestCaseSource(nameof(ValidCommitMessages))]
-        public void WhenCommitMessageIsValid_AndScopeIsRestrictedGlobally_ThenReturnValidResult(
-            string[] commitMessageLines
-        )
-        {
-            // Arrange
-            var subject = new CommitMessageValidator(GetConfigWithGlobalScopes());
-
-            // Act
-            var result = subject.Validate(commitMessageLines);
-
-            // Assert
-            result.IsValid.Should().BeTrue();
-        }
-
-        [TestCaseSource(nameof(ValidCommitMessages))]
-        public void WhenCommitMessageIsValid_AndScopeIsRestrictedPerType_ThenReturnValidResult(
-            string[] commitMessageLines
-        )
-        {
-            // Arrange
-            var subject = new CommitMessageValidator(GetConfigWithPerTypeScopes());
-
-            // Act
-            var result = subject.Validate(commitMessageLines);
-
-            // Assert
-            result.IsValid.Should().BeTrue();
-        }
-
-        [TestCaseSource(nameof(InvalidCommitMessagesForScopeRestriction))]
-        public void WhenCommitMessageHasNotAllowedScope_AndScopeIsRestrictedGlobally_ThenReturnInvalidResult(
-            string[] commitMessageLines
-        )
-        {
-            // Arrange
-            var subject = new CommitMessageValidator(GetConfigWithGlobalScopes());
-
-            // Act
-            var result = subject.Validate(commitMessageLines);
-
-            // Assert
-            result.IsValid.Should().BeFalse();
-        }
-
-        [TestCaseSource(nameof(InvalidCommitMessagesForScopeRestriction))]
-        public void WhenCommitMessageHasNotAllowedScope_AndScopeIsRestrictedPerType_ThenReturnInvalidResult(
-            string[] commitMessageLines
-        )
-        {
-            // Arrange
-            var subject = new CommitMessageValidator(GetConfigWithPerTypeScopes());
-
-            // Act
-            var result = subject.Validate(commitMessageLines);
-
-            // Assert
-            result.IsValid.Should().BeFalse();
         }
 
         [Test]
         public void WhenCommitMessageIsEmpty_ThenReturnInvalidResult()
         {
             // Arrange
-            var subject = new CommitMessageValidator(GetConfig());
+            var subject = new ConventionalCommitsSpecValidator(GetConfig());
             string[] commitMessageLines = [string.Empty];
-
-            // Act
-            var result = subject.Validate(commitMessageLines);
-
-            // Assert
-            result.IsValid.Should().BeFalse();
-        }
-
-        [Test]
-        public void WhenSubjectExceedsMaxLength_ThenReturnInvalidResult()
-        {
-            // Arrange
-            var config = GetConfig(maxSubjectLength: 10);
-            var subject = new CommitMessageValidator(config);
-            string[] commitMessageLines = ["feat: description"];
 
             // Act
             var result = subject.Validate(commitMessageLines);
@@ -113,7 +38,7 @@ namespace CommitLint.Net.Tests.UnitTests.ValidatorsTests
         public void WhenCommitMessageDoesNotContainBlankLineBeforeBody_ThenReturnInvalidResult()
         {
             // Arrange
-            var subject = new CommitMessageValidator(GetConfig());
+            var subject = new ConventionalCommitsSpecValidator(GetConfig());
             string[] commitMessageLines = ["feat: description", "Body"];
 
             // Act
@@ -127,7 +52,7 @@ namespace CommitLint.Net.Tests.UnitTests.ValidatorsTests
         public void WhenCommitMessageBodyIsEmpty_ThenReturnInvalidResult()
         {
             // Arrange
-            var subject = new CommitMessageValidator(GetConfig());
+            var subject = new ConventionalCommitsSpecValidator(GetConfig());
             string[] commitMessageLines = ["feat: This is a valid message", "", ""];
 
             // Act
@@ -141,7 +66,7 @@ namespace CommitLint.Net.Tests.UnitTests.ValidatorsTests
         public void WhenCommitMessageTypeIsInvalid_ThenReturnInvalidResult()
         {
             // Arrange
-            var subject = new CommitMessageValidator(GetConfig());
+            var subject = new ConventionalCommitsSpecValidator(GetConfig());
             string[] commitMessageLines = ["invalid_type: description"];
 
             // Act
@@ -155,7 +80,7 @@ namespace CommitLint.Net.Tests.UnitTests.ValidatorsTests
         public void WhenCommitMessageScopeIsInvalid_ThenReturnInvalidResult()
         {
             // Arrange
-            var subject = new CommitMessageValidator(GetConfig());
+            var subject = new ConventionalCommitsSpecValidator(GetConfig());
             string[] commitMessageLines = ["feat(invalid scope): description"];
 
             // Act
@@ -169,7 +94,7 @@ namespace CommitLint.Net.Tests.UnitTests.ValidatorsTests
         public void WhenTypeAndScopePrefixHasInvalidBreakingChangeMarker_ThenReturnInvalidResult()
         {
             // Arrange
-            var subject = new CommitMessageValidator(GetConfig());
+            var subject = new ConventionalCommitsSpecValidator(GetConfig());
             string[] commitMessageLines = ["feat!(scope): description"];
 
             // Act
@@ -183,7 +108,7 @@ namespace CommitLint.Net.Tests.UnitTests.ValidatorsTests
         public void WhenBreakingChangeTokenIsNotUppercase_ThenReturnInvalidResult()
         {
             // Arrange
-            var subject = new CommitMessageValidator(GetConfig());
+            var subject = new ConventionalCommitsSpecValidator(GetConfig());
             string[] commitMessageLines =
             [
                 "feat: description",
@@ -202,7 +127,7 @@ namespace CommitLint.Net.Tests.UnitTests.ValidatorsTests
         public void WhenFirstFooterDoesNotHaveBlankLine_ThenReturnInvalidResult()
         {
             // Arrange
-            var subject = new CommitMessageValidator(GetConfig());
+            var subject = new ConventionalCommitsSpecValidator(GetConfig());
             string[] commitMessageLines =
             [
                 "feat: description",
@@ -222,7 +147,7 @@ namespace CommitLint.Net.Tests.UnitTests.ValidatorsTests
         public void WhenFooterIsEmpty_ThenReturnInvalidResult()
         {
             // Arrange
-            var subject = new CommitMessageValidator(GetConfig());
+            var subject = new ConventionalCommitsSpecValidator(GetConfig());
             string[] commitMessageLines = ["feat: description", "", "empty-footer: "];
 
             // Act
@@ -247,38 +172,6 @@ namespace CommitLint.Net.Tests.UnitTests.ValidatorsTests
                     Types = ["feat", "fix", "docs", "revert"],
                 },
             };
-        }
-
-        private static CommitMessageConfig GetConfigWithGlobalScopes()
-        {
-            var config = GetConfig();
-            config.ConventionalCommit!.Scopes = new ScopesConfig
-            {
-                Enabled = true,
-                Global = ["scope"],
-            };
-            return config;
-        }
-
-        private static CommitMessageConfig GetConfigWithPerTypeScopes()
-        {
-            var config = GetConfig();
-            config.ConventionalCommit!.Scopes = new ScopesConfig
-            {
-                Enabled = true,
-                PerType = new Dictionary<string, List<string>>
-                {
-                    ["feat"] = ["scope"],
-                    ["fix"] = ["scope2"],
-                },
-            };
-            return config;
-        }
-
-        private static IEnumerable<string[]> InvalidCommitMessagesForScopeRestriction()
-        {
-            yield return ["feat(invalid-scope): commit message"];
-            yield return ["fix(wrong): commit message"];
         }
 
         private static IEnumerable<string[]> ValidCommitMessages()
