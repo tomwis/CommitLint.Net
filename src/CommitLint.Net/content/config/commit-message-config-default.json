@@ -6,7 +6,23 @@
         },
         "conventional-commit": {
             "enabled": true,
-            "types": [ "feat", "fix", "refactor", "build", "chore", "style", "test", "docs", "perf", "revert" ]
+            "types": [ "feat", "fix", "refactor", "build", "chore", "style", "test", "docs", "perf", "revert" ],
+            "scopes": {
+                "enabled": false,
+                "global": [],
+                "per-type": {
+                  "feat": [],
+                  "fix": [],
+                  "refactor": [],
+                  "build": [],
+                  "chore": [],
+                  "style": [],
+                  "test": [],
+                  "docs": [],
+                  "perf": [],
+                  "revert": []
+                }
+            }
         }
-    }    
+    }
 }
