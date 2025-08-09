@@ -4,4 +4,5 @@ public sealed class ConventionalCommitConfig
 {
     public bool Enabled { get; set; }
     public List<string>? Types { get; set; }
+    public ScopesConfig? Scopes { get; set; }
 }

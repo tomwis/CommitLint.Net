@@ -20,6 +20,66 @@ namespace CommitLint.Net.Tests.UnitTests.ValidatorsTests
             result.IsValid.Should().BeTrue();
         }
 
+        [TestCaseSource(nameof(ValidCommitMessages))]
+        public void WhenCommitMessageIsValid_AndScopeIsRestrictedGlobally_ThenReturnValidResult(
+            string[] commitMessageLines
+        )
+        {
+            // Arrange
+            var subject = new CommitMessageValidator(GetConfigWithGlobalScopes());
+
+            // Act
+            var result = subject.Validate(commitMessageLines);
+
+            // Assert
+            result.IsValid.Should().BeTrue();
+        }
+
+        [TestCaseSource(nameof(ValidCommitMessages))]
+        public void WhenCommitMessageIsValid_AndScopeIsRestrictedPerType_ThenReturnValidResult(
+            string[] commitMessageLines
+        )
+        {
+            // Arrange
+            var subject = new CommitMessageValidator(GetConfigWithPerTypeScopes());
+
+            // Act
+            var result = subject.Validate(commitMessageLines);
+
+            // Assert
+            result.IsValid.Should().BeTrue();
+        }
+
+        [TestCaseSource(nameof(InvalidCommitMessagesForScopeRestriction))]
+        public void WhenCommitMessageHasNotAllowedScope_AndScopeIsRestrictedGlobally_ThenReturnInvalidResult(
+            string[] commitMessageLines
+        )
+        {
+            // Arrange
+            var subject = new CommitMessageValidator(GetConfigWithGlobalScopes());
+
+            // Act
+            var result = subject.Validate(commitMessageLines);
+
+            // Assert
+            result.IsValid.Should().BeFalse();
+        }
+
+        [TestCaseSource(nameof(InvalidCommitMessagesForScopeRestriction))]
+        public void WhenCommitMessageHasNotAllowedScope_AndScopeIsRestrictedPerType_ThenReturnInvalidResult(
+            string[] commitMessageLines
+        )
+        {
+            // Arrange
+            var subject = new CommitMessageValidator(GetConfigWithPerTypeScopes());
+
+            // Act
+            var result = subject.Validate(commitMessageLines);
+
+            // Assert
+            result.IsValid.Should().BeFalse();
+        }
+
         [Test]
         public void WhenCommitMessageIsEmpty_ThenReturnInvalidResult()
         {
@@ -187,6 +247,38 @@ namespace CommitLint.Net.Tests.UnitTests.ValidatorsTests
                     Types = ["feat", "fix", "docs", "revert"],
                 },
             };
+        }
+
+        private static CommitMessageConfig GetConfigWithGlobalScopes()
+        {
+            var config = GetConfig();
+            config.ConventionalCommit!.Scopes = new ScopesConfig
+            {
+                Enabled = true,
+                Global = ["scope"],
+            };
+            return config;
+        }
+
+        private static CommitMessageConfig GetConfigWithPerTypeScopes()
+        {
+            var config = GetConfig();
+            config.ConventionalCommit!.Scopes = new ScopesConfig
+            {
+                Enabled = true,
+                PerType = new Dictionary<string, List<string>>
+                {
+                    ["feat"] = ["scope"],
+                    ["fix"] = ["scope2"],
+                },
+            };
+            return config;
+        }
+
+        private static IEnumerable<string[]> InvalidCommitMessagesForScopeRestriction()
+        {
+            yield return ["feat(invalid-scope): commit message"];
+            yield return ["fix(wrong): commit message"];
         }
 
         private static IEnumerable<string[]> ValidCommitMessages()

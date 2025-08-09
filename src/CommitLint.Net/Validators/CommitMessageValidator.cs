@@ -12,6 +12,7 @@ internal class CommitMessageValidator(CommitMessageConfig? config)
         new BreakingChangeSubjectMarkerRule(config?.ConventionalCommit),
         new TypeRule(config?.ConventionalCommit),
         new ScopeRule(config?.ConventionalCommit),
+        new AllowedScopesRule(config?.ConventionalCommit),
         new DescriptionNotEmptyRule(config?.ConventionalCommit),
         new BlankLineBeforeBodyRule(config?.ConventionalCommit),
         new BodyNotEmptyRule(config?.ConventionalCommit),
