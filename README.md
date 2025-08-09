@@ -128,19 +128,25 @@ dotnet commit-lint --commit-file "path/to/commit-message.txt" --commit-message-c
 
 # Current Rules
 
+## [Conventional Commits specification](https://www.conventionalcommits.org/en/v1.0.0/#specification) rules
+1. Scope format check
+2. Type format check + if it is on allowed list
+3. Description not empty check
+4. Blank line before body check
+5. Body not empty check
+6. Blank line before footers check
+7. Optional "!" character after type/scope for breaking change check
+8. Breaking change token in footer format check
+9. Footers content not empty check
+
+Note: can be disabled in config by setting `conventional-commit.enabled` to `false`.
+
+## Additional checks on conventional commits rules
+1. Allowed scopes check - you can configure allowed scopes as described in [Config options](#config-options)
+
+Note: can be disabled in config by setting `conventional-commit.scopes.enabled` to `false`.
+
+## Additional rules
 1. Max subject length check
-2. Scope format check
-3. Type format check + if it is on allowed list
-4. Description not empty check
-5. Blank line before body check
-6. Body not empty check
-7. Blank line before footers check
-8. Optional "!" character after type/scope for breaking change check
-9. Breaking change token in footer format check
-10. Footers content not empty check
-11. Allowed scopes check - you can configure allowed scopes as described in [Config options](#config-options)
 
-Rules 2 - 10 are
-from [Conventional Commits specification](https://www.conventionalcommits.org/en/v1.0.0/#specification). Rule 1 is an additional one. Rule 11 is an addition to conventional commits.
-
-Rule 1 can be disabled in config and rules 2 - 10 can be disabled in config as well, but all together, not one by one.
+Note: can be disabled in config by setting `max-subject-length.enabled` to `false`.
