@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [versionize](https://github.com/versionize/versionize) for commit guidelines.
 
+<a name="0.8.0"></a>
+## [0.8.0](https://www.github.com/tomwis/CommitLint.Net/releases/tag/v0.8.0) (2025-08-09)
+
+### Features
+
+* extended configuration to define allowed scopes ([3bf0db1](https://www.github.com/tomwis/CommitLint.Net/commit/3bf0db10240664436ddec5c7df908b63a0fa5070))
+* updated default config file with allowed scopes, disabled by default ([2921037](https://www.github.com/tomwis/CommitLint.Net/commit/292103732abd226b46bcbba1360afd8d4b8e1cfd))
+
+### Bug Fixes
+
+* added check for array length in description not empty rule ([71b8606](https://www.github.com/tomwis/CommitLint.Net/commit/71b86066b498ae5a83d27aa13e4720d7cbe5fa13))
+* added check in rules to make sure commit is not empty ([069e5d4](https://www.github.com/tomwis/CommitLint.Net/commit/069e5d476715ea65cae78fc73e610655dd0cb3f1))
+
 <a name="0.7.0"></a>
 ## [0.7.0](https://www.github.com/tomwis/CommitLint.Net/releases/tag/v0.7.0) (2025-01-07)
 
