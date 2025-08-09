@@ -16,7 +16,13 @@ public sealed class DescriptionNotEmptyRule(ConventionalCommitConfig? config)
             return RuleValidationResult.Success("Commit message is empty.");
         }
 
-        var commitDescription = commitMessageLines[0].Split(RuleConstants.SubjectSeparator)[1];
+        var subjectItems = commitMessageLines[0].Split(RuleConstants.SubjectSeparator);
+        if (subjectItems.Length < 2)
+        {
+            return RuleValidationResult.Failure("Commit doesn't have subject separator.");
+        }
+
+        var commitDescription = subjectItems[1];
         if (string.IsNullOrWhiteSpace(commitDescription))
         {
             return RuleValidationResult.Failure("Commit description cannot be empty.");
