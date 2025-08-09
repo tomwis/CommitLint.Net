@@ -40,5 +40,8 @@
     <None Update="IntegrationTests\Data\sampleInvalidCommit.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="IntegrationTests\Data\sampleConfigWithScopes.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>

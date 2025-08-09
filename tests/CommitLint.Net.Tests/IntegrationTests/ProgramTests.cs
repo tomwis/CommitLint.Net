@@ -21,8 +21,9 @@ public class ProgramTests
         Console.SetOut(_originalConsoleOut);
     }
 
-    [Test]
-    public void WhenMainIsCalledWithValidArguments_ThenReturnZero()
+    [TestCase("IntegrationTests/Data/sampleConfig.json")]
+    [TestCase("IntegrationTests/Data/sampleConfigWithScopes.json")]
+    public void WhenMainIsCalledWithValidArguments_ThenReturnZero(string configFile)
     {
         // Arrange
         string[] args =
@@ -30,7 +31,7 @@ public class ProgramTests
             "--commit-file",
             "IntegrationTests/Data/sampleCommit.txt",
             "--commit-message-config-file",
-            "IntegrationTests/Data/sampleConfig.json",
+            configFile,
         ];
 
         // Act
