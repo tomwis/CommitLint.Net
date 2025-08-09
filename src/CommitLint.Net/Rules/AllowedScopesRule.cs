@@ -11,6 +11,11 @@ public sealed class AllowedScopesRule(ConventionalCommitConfig? config)
 
     protected override RuleValidationResult IsValidInternal(string[] commitMessageLines)
     {
+        if (commitMessageLines.Length < 1)
+        {
+            return RuleValidationResult.Success("Commit message is empty.");
+        }
+
         var typeAndScope = commitMessageLines[0].Split(RuleConstants.SubjectSeparator)[0];
         var openParenthesisIndex = typeAndScope.IndexOf('(');
         var closeParenthesisIndex = typeAndScope.IndexOf(')');
